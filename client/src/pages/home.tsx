@@ -168,7 +168,7 @@ export default function Home() {
                     </li>
                   </ul>
 
-                  <Link href="/products">
+                  <Link href={`/products?boxId=${box.id}`}>
                     <Button className={`w-full ${
                       index === 1 
                         ? 'bg-sunny-yellow hover:bg-sunny-yellow/90' 

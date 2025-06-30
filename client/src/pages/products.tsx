@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import BoxSelector from "@/components/product/box-selector";
 import ItemCustomizer from "@/components/product/item-customizer";
@@ -8,6 +9,7 @@ import type { BoxType, Product, CartItem } from "@/lib/types";
 export default function Products() {
   const [selectedBox, setSelectedBox] = useState<BoxType | null>(null);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [location] = useLocation();
 
   const { data: boxTypes = [] } = useQuery<BoxType[]>({
     queryKey: ["/api/box-types"],
@@ -24,6 +26,19 @@ export default function Products() {
 
   const fruits = products.filter(p => p.category === "fruit");
   const vegetables = products.filter(p => p.category === "vegetable");
+
+  // Auto-select box if boxId is provided in URL
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const boxId = urlParams.get('boxId');
+    
+    if (boxId && boxTypes.length > 0 && !selectedBox) {
+      const box = boxTypes.find(b => b.id === parseInt(boxId));
+      if (box) {
+        setSelectedBox(box);
+      }
+    }
+  }, [boxTypes, selectedBox]);
 
   const calculateTotal = () => {
     // Only calculate the cost of added items, no box price
