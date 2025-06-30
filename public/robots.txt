@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://freshbox.pk/sitemap.xml
+
+# Disallow admin areas
+Disallow: /admin
+
+# Allow important pages for indexing
+Allow: /
+Allow: /products
+Allow: /how-it-works
+Allow: /about
+Allow: /contact
+Allow: /faq
+
+# Crawl delay for courtesy
+Crawl-delay: 1
