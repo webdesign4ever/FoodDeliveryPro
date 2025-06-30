@@ -296,25 +296,6 @@ export default function Checkout() {
     }
   };
 
-  if (!selectedBox || cartItems.length === 0) {
-    return (
-      <div className="min-h-screen bg-light-green-tint py-8">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Card>
-            <CardContent className="p-8 text-center">
-              <h2 className="text-2xl font-bold dark-text mb-4">No Items in Cart</h2>
-              <p className="text-gray-600 mb-6">Please add items to your cart before proceeding to checkout.</p>
-              <Button onClick={() => setLocation('/products')} className="bg-fresh-green text-white hover:bg-fresh-green/90">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Products
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    );
-  }
-
   if (receipt) {
     return (
       <div className="min-h-screen bg-light-green-tint py-8">
@@ -609,4 +590,24 @@ export default function Checkout() {
       </div>
     </div>
   );
+
+  // Show empty cart message only if no receipt and no items
+  if (!selectedBox || cartItems.length === 0) {
+    return (
+      <div className="min-h-screen bg-light-green-tint py-8">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Card>
+            <CardContent className="p-8 text-center">
+              <h2 className="text-2xl font-bold dark-text mb-4">No Items in Cart</h2>
+              <p className="text-gray-600 mb-6">Please add items to your cart before proceeding to checkout.</p>
+              <Button onClick={() => setLocation('/products')} className="bg-fresh-green text-white hover:bg-fresh-green/90">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Products
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 }
