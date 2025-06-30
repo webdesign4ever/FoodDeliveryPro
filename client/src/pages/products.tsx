@@ -25,6 +25,17 @@ export default function Products() {
   const fruits = products.filter(p => p.category === "fruit");
   const vegetables = products.filter(p => p.category === "vegetable");
 
+  const calculateTotal = () => {
+    if (!selectedBox) return "0.00";
+    
+    const boxPrice = parseFloat(selectedBox.price);
+    const itemsTotal = cartItems.reduce((sum, item) => {
+      return sum + (parseFloat(item.product.price) * item.quantity);
+    }, 0);
+    
+    return (boxPrice + itemsTotal).toFixed(2);
+  };
+
   const addToCart = (product: Product, quantity: number) => {
     if (!selectedBox) return;
 
@@ -147,7 +158,7 @@ export default function Products() {
                   
                   <div className="flex justify-between items-center">
                     <span className="font-medium">Items:</span>
-                    <span>{cartItems.reduce((sum, item) => sum + item.quantity, 0)} / {selectedBox.itemsLimit}</span>
+                    <span>{cartItems.reduce((sum, item) => sum + item.quantity, 0)}</span>
                   </div>
                 </div>
 
@@ -179,7 +190,7 @@ export default function Products() {
                 <div className="border-t pt-4">
                   <div className="flex justify-between items-center text-lg font-bold mb-4">
                     <span>Total:</span>
-                    <span className="fresh-green">Rs. {selectedBox.price}</span>
+                    <span className="fresh-green">Rs. {calculateTotal()}</span>
                   </div>
                   
                   <button
