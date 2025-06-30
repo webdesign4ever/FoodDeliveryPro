@@ -74,14 +74,10 @@ export default function Checkout() {
   });
 
   const calculateTotal = () => {
-    if (!selectedBox) return "0.00";
-    
-    const boxPrice = parseFloat(selectedBox.price);
-    const itemsTotal = cartItems.reduce((sum, item) => {
+    // Only calculate the cost of added items, no box price
+    return cartItems.reduce((sum, item) => {
       return sum + (parseFloat(item.product.price) * item.quantity);
-    }, 0);
-    
-    return (boxPrice + itemsTotal).toFixed(2);
+    }, 0).toFixed(2);
   };
 
   const calculateSubtotal = () => {
@@ -121,7 +117,7 @@ export default function Checkout() {
         boxType: selectedBox!,
         items: cartItems,
         subtotal: calculateSubtotal(),
-        boxPrice: selectedBox!.price,
+        boxPrice: "0.00",
         total: calculateTotal(),
         paymentMethod: form.getValues('paymentMethod'),
         orderDate: new Date().toLocaleDateString(),
@@ -266,10 +262,6 @@ export default function Checkout() {
               <span>Items Subtotal:</span>
               <span>Rs. ${receipt.subtotal}</span>
             </div>
-            <div class="total-row">
-              <span>Box Price:</span>
-              <span>Rs. ${receipt.boxPrice}</span>
-            </div>
             <div class="total-row final-total">
               <span>Total Amount:</span>
               <span>Rs. ${receipt.total}</span>
@@ -387,10 +379,6 @@ export default function Checkout() {
                   <div className="flex justify-between">
                     <span>Items Subtotal:</span>
                     <span>Rs. {receipt.subtotal}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Box Price:</span>
-                    <span>Rs. {receipt.boxPrice}</span>
                   </div>
                   <div className="flex justify-between text-lg font-bold fresh-green">
                     <span>Total Amount:</span>
@@ -575,9 +563,8 @@ export default function Checkout() {
                 <div className="flex justify-between items-center p-3 bg-light-green-tint rounded">
                   <div>
                     <span className="font-medium">{selectedBox.name}</span>
-                    <p className="text-sm text-gray-600">{selectedBox.description}</p>
                   </div>
-                  <span className="font-semibold">Rs. {selectedBox.price}</span>
+                  <span className="font-semibold text-gray-500">Container</span>
                 </div>
                 
                 {cartItems.map((item) => (
@@ -596,10 +583,6 @@ export default function Checkout() {
                   <div className="flex justify-between">
                     <span>Items Subtotal:</span>
                     <span>Rs. {calculateSubtotal()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Box Price:</span>
-                    <span>Rs. {selectedBox.price}</span>
                   </div>
                   <div className="flex justify-between text-lg font-bold fresh-green">
                     <span>Total:</span>

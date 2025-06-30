@@ -91,36 +91,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Orders API
   const createOrderSchema = z.object({
-    customer: insertCustomerSchema,
-    order: insertOrderSchema.omit({ customerId: true }),
-    orderItems: z.array(insertOrderItemSchema.omit({ orderId: true })),
+    customer: z.object({
+      firstName: z.string(),
+      lastName: z.string(),
+      email: z.string().email(),
+      phone: z.string(),
+      address: z.string(),
+      city: z.string(),
+    }),
+    boxTypeId: z.number(),
+    totalAmount: z.string(),
+    paymentMethod: z.enum(["easypaisa", "jazzcash"]),
+    specialInstructions: z.string().optional(),
+    items: z.array(z.object({
+      productId: z.number(),
+      quantity: z.string(),
+      unitPrice: z.string(),
+    })),
   });
 
   app.post("/api/orders", async (req, res) => {
     try {
-      const { customer: customerData, order: orderData, orderItems: orderItemsData } = createOrderSchema.parse(req.body);
+      const orderData = createOrderSchema.parse(req.body);
       
       // Create or get customer
-      let customer = await storage.getCustomerByEmail(customerData.email);
+      let customer = await storage.getCustomerByEmail(orderData.customer.email);
       if (!customer) {
-        customer = await storage.createCustomer(customerData);
+        customer = await storage.createCustomer(orderData.customer);
       }
       
       // Create order
       const order = await storage.createOrder({
-        ...orderData,
         customerId: customer.id,
+        boxTypeId: orderData.boxTypeId,
+        totalAmount: orderData.totalAmount,
+        paymentMethod: orderData.paymentMethod,
+        specialInstructions: orderData.specialInstructions,
+        orderStatus: "pending",
+        paymentStatus: "pending",
       });
       
       // Create order items
       const orderItems = await storage.createOrderItems(
-        orderItemsData.map(item => ({
-          ...item,
+        orderData.items.map(item => ({
           orderId: order.id,
+          productId: item.productId,
+          quantity: item.quantity,
+          unitPrice: item.unitPrice,
         }))
       );
       
-      res.json({ order, orderItems });
+      res.json(order);
     } catch (error) {
       console.error("Order creation error:", error);
       res.status(400).json({ message: "Failed to create order" });
