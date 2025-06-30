@@ -195,6 +195,12 @@ export default function Products() {
                   
                   <button
                     disabled={cartItems.length === 0}
+                    onClick={() => {
+                      if (selectedBox && cartItems.length > 0) {
+                        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                        window.location.href = `/checkout?boxId=${selectedBox.id}`;
+                      }
+                    }}
                     className="w-full bg-fresh-green text-white py-3 rounded-xl font-semibold hover:bg-fresh-green/90 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
                   >
                     Proceed to Checkout
