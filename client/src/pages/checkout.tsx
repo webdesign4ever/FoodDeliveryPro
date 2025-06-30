@@ -244,15 +244,9 @@ export default function Checkout() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><strong>${receipt.boxType.name}</strong></td>
-                <td>1</td>
-                <td>Rs. ${receipt.boxPrice}</td>
-                <td>Rs. ${receipt.boxPrice}</td>
-              </tr>
               ${receipt.items.map(item => `
                 <tr>
-                  <td>${item.product.name}</td>
+                  <td>${item.sourceBoxType?.name || 'Mixed Selection'} - ${item.product.name}</td>
                   <td>${item.quantity} ${item.product.unit}</td>
                   <td>Rs. ${item.product.price}</td>
                   <td>Rs. ${(parseFloat(item.product.price) * item.quantity).toFixed(2)}</td>
@@ -332,29 +326,47 @@ export default function Checkout() {
               <div>
                 <h3 className="font-semibold dark-text mb-2">Order Details</h3>
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                    <div>
-                      <span className="font-medium">{receipt.boxType.name}</span>
-                      <p className="text-sm text-gray-600">Box container</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-medium">Rs. {receipt.boxPrice}</p>
-                      <p className="text-sm text-gray-600">Qty: 1</p>
-                    </div>
-                  </div>
-                  
-                  {receipt.items.map((item) => (
-                    <div key={item.product.id} className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                      <div>
-                        <span className="font-medium">{item.product.name}</span>
-                        <p className="text-sm text-gray-600">{item.product.category}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-medium">Rs. {(parseFloat(item.product.price) * item.quantity).toFixed(2)}</p>
-                        <p className="text-sm text-gray-600">Qty: {item.quantity} {item.product.unit}</p>
-                      </div>
-                    </div>
-                  ))}
+                  {/* Group items by source box type */}
+                  {(() => {
+                    const itemsByBoxType = receipt.items.reduce((acc, item) => {
+                      const boxName = item.sourceBoxType?.name || 'Mixed Selection';
+                      if (!acc[boxName]) {
+                        acc[boxName] = [];
+                      }
+                      acc[boxName].push(item);
+                      return acc;
+                    }, {} as Record<string, typeof receipt.items>);
+
+                    return Object.entries(itemsByBoxType).map(([boxName, items]) => {
+                      const boxTotal = items.reduce((sum, item) => sum + (parseFloat(item.product.price) * item.quantity), 0);
+                      return (
+                        <div key={boxName} className="space-y-2">
+                          <div className="flex justify-between items-center p-3 bg-light-green-tint rounded">
+                            <div>
+                              <span className="font-medium">{boxName}</span>
+                              <p className="text-sm text-gray-600">{items.length} item{items.length > 1 ? 's' : ''} selected</p>
+                            </div>
+                            <div className="text-right">
+                              <p className="font-medium">Rs. {boxTotal.toFixed(2)}</p>
+                            </div>
+                          </div>
+                          
+                          {items.map((item) => (
+                            <div key={item.product.id} className="flex justify-between items-center p-3 bg-gray-50 rounded ml-4">
+                              <div>
+                                <span className="font-medium">{item.product.name}</span>
+                                <p className="text-sm text-gray-600">{item.product.category}</p>
+                              </div>
+                              <div className="text-right">
+                                <p className="font-medium">Rs. {(parseFloat(item.product.price) * item.quantity).toFixed(2)}</p>
+                                <p className="text-sm text-gray-600">Qty: {item.quantity} {item.product.unit}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      );
+                    });
+                  })()}
                 </div>
               </div>
 
@@ -545,23 +557,41 @@ export default function Checkout() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-3">
-                <div className="flex justify-between items-center p-3 bg-light-green-tint rounded">
-                  <div>
-                    <span className="font-medium">Mixed Fresh Box</span>
-                    <p className="text-sm text-gray-600">Custom selection of fresh items</p>
-                  </div>
-                  <span className="font-semibold text-gray-500">Container</span>
-                </div>
-                
-                {cartItems.map((item) => (
-                  <div key={item.product.id} className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                    <div>
-                      <span className="font-medium">{item.product.name}</span>
-                      <p className="text-sm text-gray-600">{item.quantity} {item.product.unit}</p>
+                {/* Group items by source box type */}
+                {(() => {
+                  const itemsByBoxType = cartItems.reduce((acc, item) => {
+                    const boxName = item.sourceBoxType?.name || 'Mixed Selection';
+                    if (!acc[boxName]) {
+                      acc[boxName] = [];
+                    }
+                    acc[boxName].push(item);
+                    return acc;
+                  }, {} as Record<string, typeof cartItems>);
+
+                  return Object.entries(itemsByBoxType).map(([boxName, items]) => (
+                    <div key={boxName} className="space-y-2">
+                      <div className="flex justify-between items-center p-3 bg-light-green-tint rounded">
+                        <div>
+                          <span className="font-medium">{boxName}</span>
+                          <p className="text-sm text-gray-600">{items.length} item{items.length > 1 ? 's' : ''} selected</p>
+                        </div>
+                        <span className="font-semibold text-gray-500">
+                          Rs. {items.reduce((sum, item) => sum + (parseFloat(item.product.price) * item.quantity), 0).toFixed(2)}
+                        </span>
+                      </div>
+                      
+                      {items.map((item) => (
+                        <div key={item.product.id} className="flex justify-between items-center p-3 bg-gray-50 rounded ml-4">
+                          <div>
+                            <span className="font-medium">{item.product.name}</span>
+                            <p className="text-sm text-gray-600">{item.quantity} {item.product.unit}</p>
+                          </div>
+                          <span className="font-semibold">Rs. {(parseFloat(item.product.price) * item.quantity).toFixed(2)}</span>
+                        </div>
+                      ))}
                     </div>
-                    <span className="font-semibold">Rs. {(parseFloat(item.product.price) * item.quantity).toFixed(2)}</span>
-                  </div>
-                ))}
+                  ));
+                })()}
               </div>
 
               <div className="border-t pt-4">

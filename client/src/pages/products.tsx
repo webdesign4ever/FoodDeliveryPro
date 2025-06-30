@@ -59,7 +59,7 @@ export default function Products() {
             : item
         );
       }
-      return [...prev, { product, quantity }];
+      return [...prev, { product, quantity, sourceBoxType: selectedBox }];
     });
   };
 

@@ -22,6 +22,7 @@ export interface Product {
 export interface CartItem {
   product: Product;
   quantity: number;
+  sourceBoxType?: BoxType; // Track which box type this item was added from
 }
 
 export interface Customer {
