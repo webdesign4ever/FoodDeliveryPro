@@ -5,9 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import AdminDashboard from "@/components/admin/admin-dashboard";
 import OrdersTable from "@/components/admin/orders-table";
-import { ShoppingCart, Users, DollarSign, Package, Plus, Download } from "lucide-react";
+import BillingDashboard from "@/components/admin/billing-dashboard";
+import { ShoppingCart, Users, DollarSign, Package, Plus, Download, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { OrderStats, Product, Order, Customer, BoxType } from "@/lib/types";
+import type { OrderStats, Product, Order, Customer, BoxType, Invoice, Payment, BillingRecord } from "@/lib/types";
 
 export default function Admin() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -21,6 +22,86 @@ export default function Admin() {
   >({
     queryKey: ["/api/orders"],
   });
+
+  // Mock billing data for demonstration
+  const mockInvoices: Invoice[] = [
+    {
+      id: 1,
+      orderId: 1,
+      invoiceNumber: "INV-202412-001",
+      issueDate: "2024-12-30",
+      dueDate: "2025-01-29",
+      subtotal: "1399.00",
+      taxAmount: "0.00",
+      discountAmount: "0.00",
+      totalAmount: "1399.00",
+      status: "paid",
+      paymentMethod: "easypaisa",
+      paidAt: "2024-12-30",
+      notes: "Payment completed successfully",
+      createdAt: "2024-12-30",
+      updatedAt: "2024-12-30"
+    },
+    {
+      id: 2,
+      orderId: 2,
+      invoiceNumber: "INV-202412-002",
+      issueDate: "2024-12-30",
+      dueDate: "2025-01-29",
+      subtotal: "799.00",
+      taxAmount: "0.00",
+      discountAmount: "0.00",
+      totalAmount: "799.00",
+      status: "pending",
+      paymentMethod: undefined,
+      paidAt: undefined,
+      notes: undefined,
+      createdAt: "2024-12-30",
+      updatedAt: "2024-12-30"
+    }
+  ];
+
+  const mockPayments: Payment[] = [
+    {
+      id: 1,
+      invoiceId: 1,
+      orderId: 1,
+      paymentMethod: "easypaisa",
+      transactionId: "EP123456789",
+      amount: "1399.00",
+      status: "completed",
+      paymentDate: "2024-12-30",
+      referenceNumber: "REF001",
+      processingFee: "20.00",
+      metadata: { gateway: "easypaisa" },
+      createdAt: "2024-12-30"
+    }
+  ];
+
+  const mockBillingRecords: BillingRecord[] = [
+    {
+      id: 1,
+      customerId: 1,
+      period: "2024-12",
+      totalOrders: 15,
+      totalAmount: "21850.00",
+      totalPaid: "18450.00",
+      totalPending: "3400.00",
+      createdAt: "2024-12-01",
+      updatedAt: "2024-12-30"
+    },
+    {
+      id: 2,
+      customerId: 2,
+      period: "2024-11",
+      totalOrders: 12,
+      totalAmount: "18900.00",
+      totalPaid: "18900.00",
+      totalPending: "0.00",
+      createdAt: "2024-11-01",
+      updatedAt: "2024-11-30"
+    }
+  ];
 
   const { data: products = [], isLoading: productsLoading } = useQuery<Product[]>({
     queryKey: ["/api/products"],
@@ -170,10 +251,11 @@ export default function Admin() {
 
         {/* Main Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-4 mb-8">
+          <TabsList className="grid w-full grid-cols-5 mb-8">
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
             <TabsTrigger value="orders">Orders</TabsTrigger>
             <TabsTrigger value="products">Products</TabsTrigger>
+            <TabsTrigger value="billing">Billing</TabsTrigger>
             <TabsTrigger value="messages">Messages</TabsTrigger>
           </TabsList>
 
@@ -245,6 +327,17 @@ export default function Admin() {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="billing">
+            <BillingDashboard
+              invoices={mockInvoices}
+              payments={mockPayments}
+              billingRecords={mockBillingRecords}
+              totalRevenue="40750.00"
+              pendingAmount="3400.00"
+              overdueAmount="0.00"
+            />
           </TabsContent>
 
           <TabsContent value="messages">

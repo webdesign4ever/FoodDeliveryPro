@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean, timestamp, decimal, json } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, decimal, json, varchar, jsonb } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -77,9 +77,81 @@ export const contactMessages = pgTable("contact_messages", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const invoices = pgTable("invoices", {
+  id: serial("id").primaryKey(),
+  orderId: integer("order_id").references(() => orders.id).notNull(),
+  invoiceNumber: text("invoice_number").notNull(),
+  issueDate: timestamp("issue_date").defaultNow().notNull(),
+  dueDate: timestamp("due_date").notNull(),
+  subtotal: decimal("subtotal", { precision: 10, scale: 2 }).notNull(),
+  taxAmount: decimal("tax_amount", { precision: 10, scale: 2 }).default("0.00").notNull(),
+  discountAmount: decimal("discount_amount", { precision: 10, scale: 2 }).default("0.00").notNull(),
+  totalAmount: decimal("total_amount", { precision: 10, scale: 2 }).notNull(),
+  status: text("status").default("pending").notNull(), // pending, paid, overdue, cancelled
+  paymentMethod: text("payment_method"),
+  paidAt: timestamp("paid_at"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const payments = pgTable("payments", {
+  id: serial("id").primaryKey(),
+  invoiceId: integer("invoice_id").references(() => invoices.id).notNull(),
+  orderId: integer("order_id").references(() => orders.id).notNull(),
+  paymentMethod: text("payment_method").notNull(), // easypaisa, jazzcash
+  transactionId: text("transaction_id"),
+  amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
+  status: text("status").default("pending").notNull(), // pending, completed, failed
+  paymentDate: timestamp("payment_date").defaultNow().notNull(),
+  referenceNumber: text("reference_number"),
+  processingFee: decimal("processing_fee", { precision: 10, scale: 2 }).default("0.00"),
+  metadata: json("metadata"), // Store additional payment gateway data
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const billingRecords = pgTable("billing_records", {
+  id: serial("id").primaryKey(),
+  customerId: integer("customer_id").references(() => customers.id).notNull(),
+  period: text("period").notNull(), // YYYY-MM format
+  totalOrders: integer("total_orders").default(0).notNull(),
+  totalAmount: decimal("total_amount", { precision: 10, scale: 2 }).default("0.00").notNull(),
+  totalPaid: decimal("total_paid", { precision: 10, scale: 2 }).default("0.00").notNull(),
+  totalPending: decimal("total_pending", { precision: 10, scale: 2 }).default("0.00").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 // Relations
 export const customersRelations = relations(customers, ({ many }) => ({
   orders: many(orders),
+  billingRecords: many(billingRecords),
+}));
+
+export const invoicesRelations = relations(invoices, ({ one, many }) => ({
+  order: one(orders, {
+    fields: [invoices.orderId],
+    references: [orders.id],
+  }),
+  payments: many(payments),
+}));
+
+export const paymentsRelations = relations(payments, ({ one }) => ({
+  invoice: one(invoices, {
+    fields: [payments.invoiceId],
+    references: [invoices.id],
+  }),
+  order: one(orders, {
+    fields: [payments.orderId],
+    references: [orders.id],
+  }),
+}));
+
+export const billingRecordsRelations = relations(billingRecords, ({ one }) => ({
+  customer: one(customers, {
+    fields: [billingRecords.customerId],
+    references: [customers.id],
+  }),
 }));
 
 export const ordersRelations = relations(orders, ({ one, many }) => ({
@@ -92,6 +164,8 @@ export const ordersRelations = relations(orders, ({ one, many }) => ({
     references: [boxTypes.id],
   }),
   orderItems: many(orderItems),
+  invoices: many(invoices),
+  payments: many(payments),
 }));
 
 export const orderItemsRelations = relations(orderItems, ({ one }) => ({
@@ -147,6 +221,23 @@ export const insertContactMessageSchema = createInsertSchema(contactMessages).om
   isReplied: true,
 });
 
+export const insertInvoiceSchema = createInsertSchema(invoices).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertPaymentSchema = createInsertSchema(payments).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertBillingRecordSchema = createInsertSchema(billingRecords).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -168,3 +259,12 @@ export type InsertOrderItem = z.infer<typeof insertOrderItemSchema>;
 
 export type ContactMessage = typeof contactMessages.$inferSelect;
 export type InsertContactMessage = z.infer<typeof insertContactMessageSchema>;
+
+export type Invoice = typeof invoices.$inferSelect;
+export type InsertInvoice = z.infer<typeof insertInvoiceSchema>;
+
+export type Payment = typeof payments.$inferSelect;
+export type InsertPayment = z.infer<typeof insertPaymentSchema>;
+
+export type BillingRecord = typeof billingRecords.$inferSelect;
+export type InsertBillingRecord = z.infer<typeof insertBillingRecordSchema>;

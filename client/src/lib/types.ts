@@ -53,3 +53,48 @@ export interface OrderStats {
   totalCustomers: number;
   totalProducts: number;
 }
+
+export interface Invoice {
+  id: number;
+  orderId: number;
+  invoiceNumber: string;
+  issueDate: string;
+  dueDate: string;
+  subtotal: string;
+  taxAmount: string;
+  discountAmount: string;
+  totalAmount: string;
+  status: string;
+  paymentMethod?: string;
+  paidAt?: string;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Payment {
+  id: number;
+  invoiceId: number;
+  orderId: number;
+  paymentMethod: string;
+  transactionId?: string;
+  amount: string;
+  status: string;
+  paymentDate: string;
+  referenceNumber?: string;
+  processingFee: string;
+  metadata?: any;
+  createdAt: string;
+}
+
+export interface BillingRecord {
+  id: number;
+  customerId: number;
+  period: string;
+  totalOrders: number;
+  totalAmount: string;
+  totalPaid: string;
+  totalPending: string;
+  createdAt: string;
+  updatedAt: string;
+}
