@@ -1,0 +1,122 @@
+📄 Project Specification Document
+Website Name: \[You Can Insert Name Here]
+Purpose: Online ordering of fresh fruits and vegetables with customizable boxes and digital payment integration (Easypaisa, JazzCash).
+
+✅ Project Overview
+This website will allow customers to order fruits and vegetables online, offering flexible box sizes (small, medium, large) and seamless digital payments via Easypaisa and JazzCash. The platform will focus on user-friendliness, mobile responsiveness, and local SEO optimization, while ensuring customers can get support when needed.
+
+🎯 Core Features
+
+1. User Interface
+
+   * Clean, modern, and mobile-responsive
+   * Minimalistic design with a natural/organic feel
+   * Language: English (optionally support Urdu)
+
+2. Ordering System
+
+   * Customizable boxes:
+
+     * Small Box: \~2–3 items
+     * Medium Box: \~4–6 items
+     * Large Box: \~7–10 items
+   * Live preview of items selected
+   * Quantity selector, price updates automatically
+
+3. Payment Integration
+
+   * Easypaisa and JazzCash
+   * No Cash on Delivery (COD)
+   * Transaction confirmation message shown instantly
+
+4. Customer Support
+
+   * Live chat widget
+   * WhatsApp integration
+   * Dedicated Contact Us form with auto-reply feature
+
+5. SEO Optimization
+
+   * Meta tags for all pages
+   * Mobile-first indexing ready
+   * Fast-loading optimized images
+   * Schema markup for products
+   * Alt tags on all images
+   * Blog section (optional) for fresh, keyword-rich content
+
+6. Admin Panel
+
+   * Add/edit/delete box items
+   * View all orders
+   * Track payment status
+   * Download customer database (.CSV)
+
+🎨 Color Theme (Natural & Fresh)
+
+* Primary Color: #58A44E (Green – symbolizing freshness and vegetables)
+* Secondary Color: #F7C948 (Yellow – for fruits and energy)
+* Accent Color: #FFFFFF (White – for clean and fresh contrast)
+* Text Color: #2F2F2F (Dark gray for readability)
+
+> Use gradients and visuals that emphasize organic farming, freshness, and nature.
+
+🧭 Website Structure
+
+| Page         | Purpose                                  |
+| ------------ | ---------------------------------------- |
+| Home         | Introduction, featured boxes, highlights |
+| Products     | Select box type and customize items      |
+| How It Works | Simple 3-step order process explanation  |
+| Payment Info | Easypaisa & JazzCash details             |
+| Contact Us   | Chat, WhatsApp, form                     |
+| FAQ          | Order, refund, delivery timelines        |
+| About Us     | Company mission, values, delivery areas  |
+
+🔧 Technical Recommendations
+
+* Framework: Next.js or React (for performance and SEO)
+* Backend (optional): Supabase / Firebase
+* Hosting: Replit + Custom Domain
+* Database: JSON/Firestore or Supabase Postgres
+* Chat Support: Tawk.to or WhatsApp API
+* Payment Gateway: Easypaisa + JazzCash REST APIs
+
+📈 SEO Essentials
+
+* Title & meta description for every page
+* SEO-friendly URLs (/custom-box, /contact-us)
+* Internal linking (e.g., Home → Products → Checkout)
+* OpenGraph and Twitter card tags for social sharing
+* Image optimization (WebP, alt-text)
+* Keyword examples: "buy fruits online Pakistan", "vegetable delivery", "fresh produce box"
+
+📦 Example Box Options (JSON Sample for Devs)
+
+```json
+{
+  "boxTypes": [
+    {
+      "name": "Small Box",
+      "price": 799,
+      "itemsLimit": 3
+    },
+    {
+      "name": "Medium Box",
+      "price": 1399,
+      "itemsLimit": 6
+    },
+    {
+      "name": "Large Box",
+      "price": 1999,
+      "itemsLimit": 10
+    }
+  ]
+}
+```
+
+👩‍💻 Developer Notes
+
+* All forms must be validated
+* Orders should trigger email/SMS confirmation
+* Enable product image upload from admin dashboard
+* Code should be clean, documented, and Replit-compatible
