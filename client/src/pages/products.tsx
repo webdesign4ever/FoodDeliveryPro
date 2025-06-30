@@ -109,10 +109,7 @@ export default function Products() {
                       <p className="text-gray-600">{selectedBox.description}</p>
                     </div>
                     <button
-                      onClick={() => {
-                        setSelectedBox(null);
-                        setCartItems([]);
-                      }}
+                      onClick={() => setSelectedBox(null)}
                       className="text-fresh-green hover:text-fresh-green/80 font-medium"
                     >
                       Change Box
@@ -163,14 +160,20 @@ export default function Products() {
                 
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between items-center">
-                    <span className="font-medium">Box Type:</span>
+                    <span className="font-medium">Current Box:</span>
                     <span className="fresh-green font-semibold">{selectedBox.name}</span>
                   </div>
                   
                   <div className="flex justify-between items-center">
-                    <span className="font-medium">Items:</span>
+                    <span className="font-medium">Total Items:</span>
                     <span>{cartItems.reduce((sum, item) => sum + item.quantity, 0)}</span>
                   </div>
+                  
+                  {cartItems.length > 0 && (
+                    <div className="text-sm text-gray-600 bg-yellow-50 p-2 rounded">
+                      <strong>Note:</strong> Items from all box types will be combined in your order
+                    </div>
+                  )}
                 </div>
 
                 {cartItems.length > 0 && (
@@ -207,9 +210,11 @@ export default function Products() {
                   <button
                     disabled={cartItems.length === 0}
                     onClick={() => {
-                      if (selectedBox && cartItems.length > 0) {
+                      if (cartItems.length > 0) {
                         localStorage.setItem('cartItems', JSON.stringify(cartItems));
-                        window.location.href = `/checkout?boxId=${selectedBox.id}`;
+                        // Use the first available box type for checkout since this is now a mixed order
+                        const boxId = boxTypes.length > 0 ? boxTypes[0].id : 1;
+                        window.location.href = `/checkout?boxId=${boxId}`;
                       }
                     }}
                     className="w-full bg-fresh-green text-white py-3 rounded-xl font-semibold hover:bg-fresh-green/90 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"

@@ -547,7 +547,8 @@ export default function Checkout() {
               <div className="space-y-3">
                 <div className="flex justify-between items-center p-3 bg-light-green-tint rounded">
                   <div>
-                    <span className="font-medium">{selectedBox.name}</span>
+                    <span className="font-medium">Mixed Fresh Box</span>
+                    <p className="text-sm text-gray-600">Custom selection of fresh items</p>
                   </div>
                   <span className="font-semibold text-gray-500">Container</span>
                 </div>
