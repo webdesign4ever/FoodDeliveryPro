@@ -26,14 +26,10 @@ export default function Products() {
   const vegetables = products.filter(p => p.category === "vegetable");
 
   const calculateTotal = () => {
-    if (!selectedBox) return "0.00";
-    
-    const boxPrice = parseFloat(selectedBox.price);
-    const itemsTotal = cartItems.reduce((sum, item) => {
+    // Only calculate the cost of added items, no box price
+    return cartItems.reduce((sum, item) => {
       return sum + (parseFloat(item.product.price) * item.quantity);
-    }, 0);
-    
-    return (boxPrice + itemsTotal).toFixed(2);
+    }, 0).toFixed(2);
   };
 
   const addToCart = (product: Product, quantity: number) => {
