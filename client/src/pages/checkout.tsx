@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
+import { queryClient } from "@/lib/queryClient";
 import type { BoxType, Product, CartItem, Customer, OrderData } from "@/lib/types";
 import { Download, FileText, ArrowLeft } from "lucide-react";
 
@@ -126,6 +127,9 @@ export default function Checkout() {
       
       setReceipt(newReceipt);
       localStorage.removeItem('cartItems');
+      
+      // Invalidate stats cache to update counters on home page
+      queryClient.invalidateQueries({ queryKey: ["/api/stats"] });
       
       toast({
         title: "Order Placed Successfully!",

@@ -120,8 +120,8 @@ export class DatabaseStorage implements IStorage {
     return newOrder;
   }
 
-  async createOrderItems(orderItems: InsertOrderItem[]): Promise<OrderItem[]> {
-    return await db.insert(orderItems).values(orderItems).returning();
+  async createOrderItems(orderItemsData: InsertOrderItem[]): Promise<OrderItem[]> {
+    return await db.insert(orderItems).values(orderItemsData).returning();
   }
 
   async getOrders(): Promise<(Order & { customer: Customer; boxType: BoxType; orderItems: (OrderItem & { product: Product })[] })[]> {
