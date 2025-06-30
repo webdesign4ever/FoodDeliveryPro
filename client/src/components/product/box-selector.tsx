@@ -72,7 +72,7 @@ export default function BoxSelector({ boxTypes, onSelectBox }: BoxSelectorProps)
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center text-gray-700">
                   <div className={`w-2 h-2 ${getBgColorClass(index)} rounded-full mr-3`}></div>
-                  <span>Up to {box.itemsLimit} fresh items</span>
+                  <span>Fill with unlimited items</span>
                 </li>
                 <li className="flex items-center text-gray-700">
                   <div className={`w-2 h-2 ${getBgColorClass(index)} rounded-full mr-3`}></div>

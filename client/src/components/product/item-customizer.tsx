@@ -9,14 +9,13 @@ interface ItemCustomizerProps {
   products: Product[];
   onAddToCart: (product: Product, quantity: number) => void;
   cartItems: CartItem[];
-  maxItems: number;
+  maxItems?: number; // Made optional since we're removing limits
 }
 
-export default function ItemCustomizer({ products, onAddToCart, cartItems, maxItems }: ItemCustomizerProps) {
+export default function ItemCustomizer({ products, onAddToCart, cartItems }: ItemCustomizerProps) {
   const [quantities, setQuantities] = useState<Record<number, number>>({});
 
   const currentItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-  const remainingSlots = maxItems - currentItemCount;
 
   const getQuantity = (productId: number) => quantities[productId] || 1;
 
@@ -53,13 +52,11 @@ export default function ItemCustomizer({ products, onAddToCart, cartItems, maxIt
       <div className="bg-white rounded-2xl p-4 shadow-sm">
         <div className="flex justify-between items-center">
           <span className="font-medium dark-text">Items in your box:</span>
-          <span className={`font-bold ${remainingSlots > 0 ? 'fresh-green' : 'text-red-500'}`}>
-            {currentItemCount} / {maxItems}
+          <span className="font-bold fresh-green">
+            {currentItemCount} items
           </span>
         </div>
-        {remainingSlots <= 0 && (
-          <p className="text-sm text-red-500 mt-2">Your box is full! Remove items to add more.</p>
-        )}
+        <p className="text-sm text-gray-600 mt-2">Add as many items as you want - no limits!</p>
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -139,7 +136,6 @@ export default function ItemCustomizer({ products, onAddToCart, cartItems, maxIt
                   
                   <Button
                     onClick={() => handleAddToCart(product)}
-                    disabled={remainingSlots < getQuantity(product.id)}
                     className="w-full bg-fresh-green hover:bg-fresh-green/90 text-white"
                   >
                     <Plus className="mr-2 h-4 w-4" />

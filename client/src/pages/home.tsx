@@ -156,7 +156,7 @@ export default function Home() {
                   <ul className="space-y-3 mb-8">
                     <li className="flex items-center text-gray-700">
                       <div className={`w-2 h-2 ${index === 1 ? 'bg-sunny-yellow' : 'bg-fresh-green'} rounded-full mr-3`}></div>
-                      <span>{box.itemsLimit} fresh items max</span>
+                      <span>Fill with unlimited items</span>
                     </li>
                     <li className="flex items-center text-gray-700">
                       <div className={`w-2 h-2 ${index === 1 ? 'bg-sunny-yellow' : 'bg-fresh-green'} rounded-full mr-3`}></div>

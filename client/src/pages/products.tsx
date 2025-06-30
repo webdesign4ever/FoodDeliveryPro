@@ -27,12 +27,6 @@ export default function Products() {
 
   const addToCart = (product: Product, quantity: number) => {
     if (!selectedBox) return;
-    
-    const currentItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-    if (currentItemCount + quantity > selectedBox.itemsLimit) {
-      alert(`Cannot add more items. ${selectedBox.name} has a limit of ${selectedBox.itemsLimit} items.`);
-      return;
-    }
 
     setCartItems(prev => {
       const existing = prev.find(item => item.product.id === product.id);
@@ -116,7 +110,6 @@ export default function Products() {
                       products={products}
                       onAddToCart={addToCart}
                       cartItems={cartItems}
-                      maxItems={selectedBox.itemsLimit}
                     />
                   </TabsContent>
                   
@@ -125,7 +118,6 @@ export default function Products() {
                       products={fruits}
                       onAddToCart={addToCart}
                       cartItems={cartItems}
-                      maxItems={selectedBox.itemsLimit}
                     />
                   </TabsContent>
                   
@@ -134,7 +126,6 @@ export default function Products() {
                       products={vegetables}
                       onAddToCart={addToCart}
                       cartItems={cartItems}
-                      maxItems={selectedBox.itemsLimit}
                     />
                   </TabsContent>
                 </Tabs>
