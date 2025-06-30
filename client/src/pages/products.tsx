@@ -1,0 +1,208 @@
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import BoxSelector from "@/components/product/box-selector";
+import ItemCustomizer from "@/components/product/item-customizer";
+import type { BoxType, Product, CartItem } from "@/lib/types";
+
+export default function Products() {
+  const [selectedBox, setSelectedBox] = useState<BoxType | null>(null);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  const { data: boxTypes = [] } = useQuery<BoxType[]>({
+    queryKey: ["/api/box-types"],
+  });
+
+  const { data: products = [] } = useQuery<Product[]>({
+    queryKey: ["/api/products"],
+    queryFn: async () => {
+      const res = await fetch("/api/products?available=true");
+      if (!res.ok) throw new Error("Failed to fetch products");
+      return res.json();
+    },
+  });
+
+  const fruits = products.filter(p => p.category === "fruit");
+  const vegetables = products.filter(p => p.category === "vegetable");
+
+  const addToCart = (product: Product, quantity: number) => {
+    if (!selectedBox) return;
+    
+    const currentItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    if (currentItemCount + quantity > selectedBox.itemsLimit) {
+      alert(`Cannot add more items. ${selectedBox.name} has a limit of ${selectedBox.itemsLimit} items.`);
+      return;
+    }
+
+    setCartItems(prev => {
+      const existing = prev.find(item => item.product.id === product.id);
+      if (existing) {
+        return prev.map(item =>
+          item.product.id === product.id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
+      }
+      return [...prev, { product, quantity }];
+    });
+  };
+
+  const removeFromCart = (productId: number) => {
+    setCartItems(prev => prev.filter(item => item.product.id !== productId));
+  };
+
+  const updateQuantity = (productId: number, quantity: number) => {
+    if (quantity <= 0) {
+      removeFromCart(productId);
+      return;
+    }
+    
+    setCartItems(prev =>
+      prev.map(item =>
+        item.product.id === productId
+          ? { ...item, quantity }
+          : item
+      )
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-light-green-tint py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold dark-text mb-4">Customize Your Fresh Box</h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Choose your box size, then select your favorite fresh fruits and vegetables.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Box Selection */}
+          <div className="lg:col-span-2">
+            {!selectedBox ? (
+              <BoxSelector 
+                boxTypes={boxTypes}
+                onSelectBox={setSelectedBox}
+              />
+            ) : (
+              <div className="space-y-6">
+                <div className="bg-white rounded-2xl p-6 shadow-lg">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-2xl font-bold dark-text">{selectedBox.name}</h3>
+                      <p className="text-gray-600">{selectedBox.description}</p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setSelectedBox(null);
+                        setCartItems([]);
+                      }}
+                      className="text-fresh-green hover:text-fresh-green/80 font-medium"
+                    >
+                      Change Box
+                    </button>
+                  </div>
+                </div>
+
+                <Tabs defaultValue="all" className="w-full">
+                  <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="all">All Products</TabsTrigger>
+                    <TabsTrigger value="fruits">Fruits</TabsTrigger>
+                    <TabsTrigger value="vegetables">Vegetables</TabsTrigger>
+                  </TabsList>
+                  
+                  <TabsContent value="all" className="mt-6">
+                    <ItemCustomizer
+                      products={products}
+                      onAddToCart={addToCart}
+                      cartItems={cartItems}
+                      maxItems={selectedBox.itemsLimit}
+                    />
+                  </TabsContent>
+                  
+                  <TabsContent value="fruits" className="mt-6">
+                    <ItemCustomizer
+                      products={fruits}
+                      onAddToCart={addToCart}
+                      cartItems={cartItems}
+                      maxItems={selectedBox.itemsLimit}
+                    />
+                  </TabsContent>
+                  
+                  <TabsContent value="vegetables" className="mt-6">
+                    <ItemCustomizer
+                      products={vegetables}
+                      onAddToCart={addToCart}
+                      cartItems={cartItems}
+                      maxItems={selectedBox.itemsLimit}
+                    />
+                  </TabsContent>
+                </Tabs>
+              </div>
+            )}
+          </div>
+
+          {/* Cart Summary */}
+          {selectedBox && (
+            <div className="lg:col-span-1">
+              <div className="bg-white rounded-2xl p-6 shadow-lg sticky top-24">
+                <h3 className="text-xl font-bold dark-text mb-4">Your Box</h3>
+                
+                <div className="space-y-4 mb-6">
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium">Box Type:</span>
+                    <span className="fresh-green font-semibold">{selectedBox.name}</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium">Items:</span>
+                    <span>{cartItems.reduce((sum, item) => sum + item.quantity, 0)} / {selectedBox.itemsLimit}</span>
+                  </div>
+                </div>
+
+                {cartItems.length > 0 && (
+                  <div className="space-y-3 mb-6 max-h-64 overflow-y-auto">
+                    {cartItems.map((item) => (
+                      <div key={item.product.id} className="flex justify-between items-center text-sm">
+                        <span className="flex-1">{item.product.name}</span>
+                        <div className="flex items-center space-x-2">
+                          <button
+                            onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                            className="w-6 h-6 flex items-center justify-center bg-gray-100 rounded text-gray-600 hover:bg-gray-200"
+                          >
+                            -
+                          </button>
+                          <span className="w-8 text-center">{item.quantity}</span>
+                          <button
+                            onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                            className="w-6 h-6 flex items-center justify-center bg-gray-100 rounded text-gray-600 hover:bg-gray-200"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <div className="border-t pt-4">
+                  <div className="flex justify-between items-center text-lg font-bold mb-4">
+                    <span>Total:</span>
+                    <span className="fresh-green">Rs. {selectedBox.price}</span>
+                  </div>
+                  
+                  <button
+                    disabled={cartItems.length === 0}
+                    className="w-full bg-fresh-green text-white py-3 rounded-xl font-semibold hover:bg-fresh-green/90 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Proceed to Checkout
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
