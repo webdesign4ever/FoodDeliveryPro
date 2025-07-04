@@ -1,10 +1,10 @@
-import { 
+import {
   users, boxTypes, products, customers, orders, orderItems, contactMessages,
   type User, type InsertUser, type BoxType, type InsertBoxType,
   type Product, type InsertProduct, type Customer, type InsertCustomer,
   type Order, type InsertOrder, type OrderItem, type InsertOrderItem,
   type ContactMessage, type InsertContactMessage
-} from "@shared/schema";
+} from "../shared/schema";
 import { db } from "./db";
 import { eq, desc, and, sql } from "drizzle-orm";
 

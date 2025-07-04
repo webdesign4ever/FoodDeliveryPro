@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertBoxTypeSchema, insertProductSchema, insertCustomerSchema, insertOrderSchema, insertOrderItemSchema, insertContactMessageSchema } from "@shared/schema";
+import { insertBoxTypeSchema, insertProductSchema, insertCustomerSchema, insertOrderSchema, insertOrderItemSchema, insertContactMessageSchema } from "../shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -33,7 +33,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { category, available } = req.query;
       let products;
-      
+
       if (available === "true") {
         products = await storage.getAvailableProducts();
       } else if (category) {
@@ -41,7 +41,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } else {
         products = await storage.getProducts();
       }
-      
+
       res.json(products);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch products" });
@@ -63,11 +63,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const id = parseInt(req.params.id);
       const updates = req.body;
       const updatedProduct = await storage.updateProduct(id, updates);
-      
+
       if (!updatedProduct) {
         return res.status(404).json({ message: "Product not found" });
       }
-      
+
       res.json(updatedProduct);
     } catch (error) {
       res.status(400).json({ message: "Failed to update product" });
@@ -78,11 +78,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const id = parseInt(req.params.id);
       const deleted = await storage.deleteProduct(id);
-      
+
       if (!deleted) {
         return res.status(404).json({ message: "Product not found" });
       }
-      
+
       res.json({ message: "Product deleted successfully" });
     } catch (error) {
       res.status(400).json({ message: "Failed to delete product" });
@@ -113,13 +113,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/orders", async (req, res) => {
     try {
       const orderData = createOrderSchema.parse(req.body);
-      
+
       // Create or get customer
       let customer = await storage.getCustomerByEmail(orderData.customer.email);
       if (!customer) {
         customer = await storage.createCustomer(orderData.customer);
       }
-      
+
       // Create order
       const order = await storage.createOrder({
         customerId: customer.id,
@@ -130,7 +130,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         orderStatus: "pending",
         paymentStatus: "pending",
       });
-      
+
       // Create order items
       const orderItems = await storage.createOrderItems(
         orderData.items.map(item => ({
@@ -140,7 +140,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           unitPrice: item.unitPrice,
         }))
       );
-      
+
       res.json(order);
     } catch (error) {
       console.error("Order creation error:", error);
@@ -161,11 +161,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const id = parseInt(req.params.id);
       const order = await storage.getOrderById(id);
-      
+
       if (!order) {
         return res.status(404).json({ message: "Order not found" });
       }
-      
+
       res.json(order);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch order" });
@@ -177,11 +177,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const id = parseInt(req.params.id);
       const { status } = req.body;
       const updatedOrder = await storage.updateOrderStatus(id, status);
-      
+
       if (!updatedOrder) {
         return res.status(404).json({ message: "Order not found" });
       }
-      
+
       res.json(updatedOrder);
     } catch (error) {
       res.status(400).json({ message: "Failed to update order status" });
@@ -193,11 +193,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const id = parseInt(req.params.id);
       const { status } = req.body;
       const updatedOrder = await storage.updatePaymentStatus(id, status);
-      
+
       if (!updatedOrder) {
         return res.status(404).json({ message: "Order not found" });
       }
-      
+
       res.json(updatedOrder);
     } catch (error) {
       res.status(400).json({ message: "Failed to update payment status" });
@@ -238,17 +238,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/payment/easypaisa", async (req, res) => {
     try {
       const { orderId, amount, phone } = req.body;
-      
+
       // Simulate payment processing
       // In production, this would integrate with Easypaisa API
       setTimeout(async () => {
         await storage.updatePaymentStatus(orderId, "completed");
       }, 2000);
-      
-      res.json({ 
-        success: true, 
+
+      res.json({
+        success: true,
         transactionId: `EP${Date.now()}`,
-        message: "Payment processed successfully" 
+        message: "Payment processed successfully"
       });
     } catch (error) {
       res.status(500).json({ message: "Payment processing failed" });
@@ -258,17 +258,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/payment/jazzcash", async (req, res) => {
     try {
       const { orderId, amount, phone } = req.body;
-      
+
       // Simulate payment processing
       // In production, this would integrate with JazzCash API
       setTimeout(async () => {
         await storage.updatePaymentStatus(orderId, "completed");
       }, 2000);
-      
-      res.json({ 
-        success: true, 
+
+      res.json({
+        success: true,
         transactionId: `JC${Date.now()}`,
-        message: "Payment processed successfully" 
+        message: "Payment processed successfully"
       });
     } catch (error) {
       res.status(500).json({ message: "Payment processing failed" });
@@ -319,7 +319,7 @@ async function initializeDefaultData() {
         { name: "Oranges", category: "fruit", price: "120.00", unit: "kg", description: "Juicy Valencia oranges", isAvailable: true },
         { name: "Mangoes", category: "fruit", price: "200.00", unit: "kg", description: "Sweet Pakistani mangoes", isAvailable: true },
         { name: "Grapes", category: "fruit", price: "180.00", unit: "kg", description: "Fresh green grapes", isAvailable: true },
-        
+
         // Vegetables
         { name: "Tomatoes", category: "vegetable", price: "60.00", unit: "kg", description: "Fresh red tomatoes", isAvailable: true },
         { name: "Onions", category: "vegetable", price: "40.00", unit: "kg", description: "Fresh white onions", isAvailable: true },
