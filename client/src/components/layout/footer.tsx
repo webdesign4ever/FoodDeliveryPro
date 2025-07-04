@@ -22,7 +22,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-dark-text text-white py-16">
+    <footer className="bg-[var(--dark-text)] text-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-4 gap-8 mb-12">
           {/* Company Info */}
@@ -84,18 +84,18 @@ export default function Footer() {
             <h4 className="text-xl font-semibold mb-6">Contact Info</h4>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <Phone className="text-fresh-green mt-1 w-5 h-5" />
+                <Phone className="text-[var(--fresh-green)] mt-1 w-5 h-5" />
                 <div>
                   <p className="text-gray-300">+92 300 1234567</p>
                   <p className="text-gray-400 text-sm">9 AM - 9 PM</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
-                <Mail className="text-fresh-green mt-1 w-5 h-5" />
+                <Mail className="text-[var(--fresh-green)] mt-1 w-5 h-5" />
                 <p className="text-gray-300">support@freshbox.pk</p>
               </div>
               <div className="flex items-start space-x-3">
-                <MapPin className="text-fresh-green mt-1 w-5 h-5" />
+                <MapPin className="text-[var(--fresh-green)] mt-1 w-5 h-5" />
                 <p className="text-gray-300">
                   Lahore, Karachi, Islamabad<br />
                   Rawalpindi & more cities

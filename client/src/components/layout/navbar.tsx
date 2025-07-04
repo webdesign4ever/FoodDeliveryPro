@@ -19,11 +19,11 @@ export default function Navbar() {
 
   const NavLink = ({ href, children, mobile = false }: { href: string; children: React.ReactNode; mobile?: boolean }) => {
     const isActive = location === href;
-    const baseClasses = mobile 
-      ? "block px-3 py-2 text-base font-medium transition-colors" 
-      : "text-dark-text hover:text-fresh-green transition-colors";
-    const activeClasses = isActive ? "text-fresh-green" : "";
-    
+    const baseClasses = mobile
+      ? "block px-3 py-2 text-base font-medium transition-colors"
+      : "hover:text-[var(--fresh-green)] transition-colors";
+    const activeClasses = isActive ? "text-[var(--fresh-green)]" : "text-[var(--dark-text)]";
+
     return (
       <Link href={href}>
         <a className={`${baseClasses} ${activeClasses}`} onClick={() => mobile && setIsOpen(false)}>
@@ -46,7 +46,7 @@ export default function Navbar() {
               <span className="text-2xl font-bold fresh-green">FreshBox</span>
             </a>
           </Link>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navigation.map((item) => (

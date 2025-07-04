@@ -32,7 +32,7 @@ export default function Home() {
     },
     {
       icon: <Package className="w-6 h-6" />,
-      title: "Fresh Deliveries", 
+      title: "Fresh Deliveries",
       description: stats ? `${stats.totalOrders}+` : "15,000+"
     }
   ];
@@ -40,9 +40,9 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-br from-light-green-tint to-light-yellow-tint">
+      <section className="relative min-h-screen bg-gradient-to-br from-[var(--light-green-tint)] to-[var(--light-yellow-tint)]">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1500595046743-cd271d694d30?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&h=1080')] bg-cover bg-center opacity-10"></div>
-        
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
@@ -55,20 +55,20 @@ export default function Home() {
                   <span className="dark-text">Delivered Daily</span>
                 </h1>
                 <p className="text-xl text-gray-600 leading-relaxed">
-                  Premium quality fruits and vegetables delivered fresh to your doorstep. 
+                  Premium quality fruits and vegetables delivered fresh to your doorstep.
                   Customize your perfect box and pay seamlessly with Easypaisa or JazzCash.
                 </p>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/products">
-                  <Button size="lg" className="bg-fresh-green text-white hover:bg-fresh-green/90 text-lg px-8 py-4">
+                  <Button size="lg" className="bg-fresh-green text-white hover:bg-[var(--fresh-green)/.9] text-lg px-8 py-4">
                     <ShoppingCart className="mr-2 w-5 h-5" />
                     Order Your Box
                   </Button>
                 </Link>
                 <Link href="/how-it-works">
-                  <Button variant="outline" size="lg" className="border-2 border-fresh-green text-fresh-green hover:bg-fresh-green hover:text-white text-lg px-8 py-4">
+                  <Button variant="outline" size="lg" className="border-2 border-[var(--fresh-green)] text-[var(--fresh-green)] hover:bg-fresh-green hover:text-white text-lg px-8 py-4">
                     <Play className="mr-2 w-5 h-5" />
                     How It Works
                   </Button>
@@ -86,12 +86,12 @@ export default function Home() {
             </div>
 
             <div className="relative">
-              <img 
-                src="https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
-                alt="Fresh fruits and vegetables in basket" 
-                className="rounded-3xl shadow-2xl w-full" 
+              <img
+                src="https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600"
+                alt="Fresh fruits and vegetables in basket"
+                className="rounded-3xl shadow-2xl w-full"
               />
-              
+
               <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl">
                 <div className="flex items-center space-x-4">
                   <div className="w-12 h-12 bg-fresh-green rounded-full flex items-center justify-center">
@@ -127,27 +127,26 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {boxTypes.map((box, index) => (
-              <Card key={box.id} className={`relative overflow-hidden hover:shadow-xl transition-all group ${
-                index === 1 ? 'border-2 border-sunny-yellow bg-light-yellow-tint' : 'bg-light-green-tint'
-              }`}>
+              <Card key={box.id} className={`relative overflow-hidden hover:shadow-xl transition-all group ${index === 1 ? 'border-2 border-[var(--sunny-yellow)] bg-light-yellow-tint' : 'bg-light-green-tint'
+                }`}>
                 {index === 1 && (
                   <div className="absolute top-4 right-4 bg-sunny-yellow text-white px-3 py-1 rounded-full text-sm font-semibold">
                     Most Popular
                   </div>
                 )}
-                
+
                 <CardContent className="p-8">
                   <div className={`w-16 h-16 ${index === 1 ? 'bg-sunny-yellow' : 'bg-fresh-green'} rounded-2xl flex items-center justify-center mb-6`}>
                     {index === 0 && <Leaf className="text-white w-8 h-8" />}
                     {index === 1 && <Apple className="text-white w-8 h-8" />}
                     {index === 2 && <Package className="text-white w-8 h-8" />}
                   </div>
-                  
+
                   <h3 className="text-2xl font-bold dark-text mb-2">{box.name}</h3>
                   <p className="text-gray-600 mb-6">{box.description}</p>
-                  
+
                   <div className="flex items-baseline mb-6">
-                    <span className={`text-4xl font-bold ${index === 1 ? 'sunny-yellow' : 'fresh-green'}`}>
+                    <span className={`text-4xl font-bold ${index === 1 ? 'text-[var(--sunny-yellow)]' : 'text-[var(--fresh-green)]'}`}>
                       Rs. {box.price}
                     </span>
                     <span className="text-gray-500 ml-2">/box</span>
@@ -155,25 +154,24 @@ export default function Home() {
 
                   <ul className="space-y-3 mb-8">
                     <li className="flex items-center text-gray-700">
-                      <div className={`w-2 h-2 ${index === 1 ? 'bg-sunny-yellow' : 'bg-fresh-green'} rounded-full mr-3`}></div>
+                      <div className={`w-2 h-2 ${index === 1 ? 'bg-[var(--sunny-yellow)]' : 'bg-[var(--fresh-green)]'} rounded-full mr-3`}></div>
                       <span>Fill with unlimited items</span>
                     </li>
                     <li className="flex items-center text-gray-700">
-                      <div className={`w-2 h-2 ${index === 1 ? 'bg-sunny-yellow' : 'bg-fresh-green'} rounded-full mr-3`}></div>
+                      <div className={`w-2 h-2 ${index === 1 ? 'bg-[var(--sunny-yellow)]' : 'bg-[var(--fresh-green)]'} rounded-full mr-3`}></div>
                       <span>Free delivery included</span>
                     </li>
                     <li className="flex items-center text-gray-700">
-                      <div className={`w-2 h-2 ${index === 1 ? 'bg-sunny-yellow' : 'bg-fresh-green'} rounded-full mr-3`}></div>
+                      <div className={`w-2 h-2 ${index === 1 ? 'bg-[var(--sunny-yellow)]' : 'bg-[var(--fresh-green)]'} rounded-full mr-3`}></div>
                       <span>100% organic guarantee</span>
                     </li>
                   </ul>
 
                   <Link href={`/products?boxId=${box.id}`}>
-                    <Button className={`w-full ${
-                      index === 1 
-                        ? 'bg-sunny-yellow hover:bg-sunny-yellow/90' 
-                        : 'bg-fresh-green hover:bg-fresh-green/90'
-                    } text-white`}>
+                    <Button className={`w-full ${index === 1
+                      ? 'bg-[var(--sunny-yellow)] hover:bg-[var(--sunny-yellow)/.9]'
+                      : 'bg-[var(--fresh-green)] hover:bg-[var(--fresh-green)/.9]'
+                      } text-white`}>
                       Customize Box
                     </Button>
                   </Link>
@@ -184,7 +182,9 @@ export default function Home() {
 
           <div className="text-center">
             <Link href="/products">
-              <Button size="lg" className="bg-fresh-green text-white hover:bg-fresh-green/90">
+              <Button size="lg" className="bg-[var(--fresh-green)] text-white hover:bg-[var(--fresh-green)/.9]"
+              // hover:bg-fresh-green/90  
+              >
                 View All Products
               </Button>
             </Link>
@@ -193,41 +193,51 @@ export default function Home() {
       </section>
 
       {/* Product Categories */}
-      <section className="py-20 bg-light-green-tint">
+      <section className="py-20 bg-[var(--light-green-tint)]"
+      //bg-light-green-tint
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-gradient-to-br from-fresh-green to-fresh-green/80 rounded-3xl p-8 text-white relative overflow-hidden">
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1540420773420-3366772f4999?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600')] bg-cover bg-center opacity-20"></div>
-              
+            <div className="bg-gradient-to-br from-[var(--fresh-green)] to-[var(--fresh-green)/.8] rounded-3xl p-8 text-white relative overflow-hidden"
+            //from-fresh-green to-fresh-green/80
+            >
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1540420773420-3366772f4999?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600')] bg-cover bg-center"
+              // opacity-20
+              ></div>
+
               <div className="relative z-10">
                 <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-6">
                   <Leaf className="text-white w-8 h-8" />
                 </div>
-                
+
                 <h3 className="text-3xl font-bold mb-4">Fresh Vegetables</h3>
                 <p className="text-white/90 mb-6">Farm-fresh vegetables picked at peak ripeness and delivered within 24 hours of harvest.</p>
-                
+
                 <Link href="/products?category=vegetable">
-                  <Button className="bg-white text-fresh-green hover:shadow-lg">
+                  <Button className="bg-white text-[var(--fresh-green)] hover:shadow-lg"
+                  //
+                  >
                     Explore Vegetables
                   </Button>
                 </Link>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-sunny-yellow to-sunny-yellow/80 rounded-3xl p-8 text-white relative overflow-hidden">
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1619566636858-adf3ef46400b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600')] bg-cover bg-center opacity-20"></div>
-              
+            <div className="bg-gradient-to-br from-[var(--sunny-yellow)] to-[var(--sunny-yellow)/.8] rounded-3xl p-8 text-white relative overflow-hidden">
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1619566636858-adf3ef46400b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600')] bg-cover bg-center"
+              // opacity-20
+              ></div>
+
               <div className="relative z-10">
                 <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mb-6">
                   <Apple className="text-white w-8 h-8" />
                 </div>
-                
+
                 <h3 className="text-3xl font-bold mb-4">Premium Fruits</h3>
                 <p className="text-white/90 mb-6">Hand-selected seasonal fruits bursting with natural sweetness and essential nutrients.</p>
-                
+
                 <Link href="/products?category=fruit">
-                  <Button className="bg-white text-sunny-yellow hover:shadow-lg">
+                  <Button className="bg-white text-[var(--sunny-yellow)] hover:shadow-lg">
                     Explore Fruits
                   </Button>
                 </Link>
