@@ -96,11 +96,11 @@ export default function Checkout() {
         },
         body: JSON.stringify(orderData),
       });
-      
+
       if (!response.ok) {
         throw new Error("Failed to create order");
       }
-      
+
       return await response.json();
     },
     onSuccess: (data) => {
@@ -124,13 +124,13 @@ export default function Checkout() {
         orderDate: new Date().toLocaleDateString(),
         deliveryDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toLocaleDateString(),
       };
-      
+
       setReceipt(newReceipt);
       localStorage.removeItem('cartItems');
-      
+
       // Invalidate stats cache to update counters on home page
       queryClient.invalidateQueries({ queryKey: ["/api/stats"] });
-      
+
       toast({
         title: "Order Placed Successfully!",
         description: "Your fresh box order has been confirmed.",
@@ -180,16 +180,16 @@ export default function Checkout() {
 
   const generatePDF = async () => {
     if (!receipt) return;
-    
+
     setIsGeneratingPDF(true);
-    
+
     try {
       // Create a print window for PDF generation
       const printWindow = window.open('', '_blank');
       if (!printWindow) {
         throw new Error('Could not open print window');
       }
-      
+
       const receiptHTML = `
         <!DOCTYPE html>
         <html>
@@ -273,12 +273,12 @@ export default function Checkout() {
         </body>
         </html>
       `;
-      
+
       printWindow.document.write(receiptHTML);
       printWindow.document.close();
       printWindow.focus();
       printWindow.print();
-      
+
     } catch (error) {
       toast({
         title: "PDF Generation Failed",
@@ -296,13 +296,13 @@ export default function Checkout() {
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <Card>
             <CardHeader className="text-center">
-              <CardTitle className="text-3xl font-bold fresh-green">🥬 FreshBox</CardTitle>
-              <p className="text-xl font-semibold dark-text">Order Receipt</p>
+              <CardTitle className="text-3xl font-bold text-fresh-green">🥬 FreshBox</CardTitle>
+              <p className="text-xl font-semibold text-dark-text">Order Receipt</p>
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Order Info */}
               <div className="bg-light-green-tint p-4 rounded-lg">
-                <h3 className="font-semibold dark-text mb-2">Order Information</h3>
+                <h3 className="font-semibold text-dark-text mb-2">Order Information</h3>
                 <div className="space-y-1 text-sm">
                   <p><span className="font-medium">Order Number:</span> {receipt.orderNumber}</p>
                   <p><span className="font-medium">Order Date:</span> {receipt.orderDate}</p>
@@ -313,7 +313,7 @@ export default function Checkout() {
 
               {/* Customer Info */}
               <div>
-                <h3 className="font-semibold dark-text mb-2">Delivery Information</h3>
+                <h3 className="font-semibold text-dark-text mb-2">Delivery Information</h3>
                 <div className="space-y-1 text-sm">
                   <p><span className="font-medium">Name:</span> {receipt.customer.firstName} {receipt.customer.lastName}</p>
                   <p><span className="font-medium">Email:</span> {receipt.customer.email}</p>
@@ -324,7 +324,7 @@ export default function Checkout() {
 
               {/* Order Items */}
               <div>
-                <h3 className="font-semibold dark-text mb-2">Order Details</h3>
+                <h3 className="font-semibold text-dark-text mb-2">Order Details</h3>
                 <div className="space-y-3">
                   {/* Group items by source box type */}
                   {(() => {
@@ -350,7 +350,7 @@ export default function Checkout() {
                               <p className="font-medium">Rs. {boxTotal.toFixed(2)}</p>
                             </div>
                           </div>
-                          
+
                           {items.map((item) => (
                             <div key={item.product.id} className="flex justify-between items-center p-3 bg-gray-50 rounded ml-4">
                               <div>
@@ -377,7 +377,7 @@ export default function Checkout() {
                     <span>Items Subtotal:</span>
                     <span>Rs. {receipt.subtotal}</span>
                   </div>
-                  <div className="flex justify-between text-lg font-bold fresh-green">
+                  <div className="flex justify-between text-lg font-bold text-fresh-green">
                     <span>Total Amount:</span>
                     <span>Rs. {receipt.total}</span>
                   </div>
@@ -389,7 +389,7 @@ export default function Checkout() {
                 <Button
                   onClick={generatePDF}
                   disabled={isGeneratingPDF}
-                  className="flex-1 bg-fresh-green text-white hover:bg-fresh-green/90"
+                  className="flex-1 bg-fresh-green text-white hover:bg-[hsla(103,38%,57%,0.9)]"
                 >
                   {isGeneratingPDF ? (
                     "Generating..."
@@ -425,7 +425,7 @@ export default function Checkout() {
     <div className="min-h-screen bg-light-green-tint py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold dark-text mb-2">Checkout</h1>
+          <h1 className="text-3xl font-bold text-dark-text mb-2">Checkout</h1>
           <p className="text-gray-600">Complete your fresh box order</p>
         </div>
 
@@ -542,7 +542,7 @@ export default function Checkout() {
                 <Button
                   type="submit"
                   disabled={createOrderMutation.isPending}
-                  className="w-full bg-fresh-green text-white hover:bg-fresh-green/90"
+                  className="w-full bg-fresh-green text-white hover:bg-[hsla(103,38%,57%,0.9)]"
                 >
                   {createOrderMutation.isPending ? "Processing..." : "Place Order"}
                 </Button>
@@ -579,7 +579,7 @@ export default function Checkout() {
                           Rs. {items.reduce((sum, item) => sum + (parseFloat(item.product.price) * item.quantity), 0).toFixed(2)}
                         </span>
                       </div>
-                      
+
                       {items.map((item) => (
                         <div key={item.product.id} className="flex justify-between items-center p-3 bg-gray-50 rounded ml-4">
                           <div>
@@ -600,7 +600,7 @@ export default function Checkout() {
                     <span>Items Subtotal:</span>
                     <span>Rs. {calculateSubtotal()}</span>
                   </div>
-                  <div className="flex justify-between text-lg font-bold fresh-green">
+                  <div className="flex justify-between text-lg font-bold text-fresh-green">
                     <span>Total:</span>
                     <span>Rs. {calculateTotal()}</span>
                   </div>
@@ -629,9 +629,9 @@ export default function Checkout() {
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <Card>
             <CardContent className="p-8 text-center">
-              <h2 className="text-2xl font-bold dark-text mb-4">No Items in Cart</h2>
+              <h2 className="text-2xl font-bold text-dark-text mb-4">No Items in Cart</h2>
               <p className="text-gray-600 mb-6">Please add items to your cart before proceeding to checkout.</p>
-              <Button onClick={() => setLocation('/products')} className="bg-fresh-green text-white hover:bg-fresh-green/90">
+              <Button onClick={() => setLocation('/products')} className="bg-fresh-green text-white hover:bg-[hsla(103,38%,57%,0.9)]">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Products
               </Button>

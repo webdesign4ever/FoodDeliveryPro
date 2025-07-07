@@ -61,7 +61,15 @@ export default {
           border: "var(--sidebar-border)",
           ring: "var(--sidebar-ring)",
         },
+        'fresh-green': "var(--fresh-green)",
+        'sunny-yellow': "var(--sunny-yellow)",
+        "dark-text": "var(--dark-text)",
+        "light-green-tint": "var(--light-green-tint)",
+        "light-yellow-tint": "var(--light-yellow-tint)",
       },
+      // backgroundImage: {
+      //   'gradient-green-yellow': 'linear-gradient(135deg, var(--fresh-green) 0%, var(--sunny-yellow) 100%)',
+      // },
       keyframes: {
         "accordion-down": {
           from: {

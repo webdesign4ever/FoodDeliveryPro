@@ -51,15 +51,15 @@ export default function ItemCustomizer({ products, onAddToCart, cartItems }: Ite
     <div className="space-y-6">
       <div className="bg-white rounded-2xl p-4 shadow-sm">
         <div className="flex justify-between items-center">
-          <span className="font-medium dark-text">Items in your box:</span>
-          <span className="font-bold fresh-green">
+          <span className="font-medium text-dark-text">Items in your box:</span>
+          <span className="font-bold text-fresh-green">
             {currentItemCount} items
           </span>
         </div>
         <p className="text-sm text-gray-600 mt-2">Add as many items as you want - no limits!</p>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
         {products.map((product) => (
           <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
             <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
@@ -67,25 +67,24 @@ export default function ItemCustomizer({ products, onAddToCart, cartItems }: Ite
                 {product.category === 'fruit' ? '🍎' : '🥬'}
               </div>
             </div>
-            
+
             <CardContent className="p-6">
               <div className="flex justify-between items-start mb-2">
-                <h3 className="font-semibold dark-text">{product.name}</h3>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                  product.category === 'fruit' 
-                    ? 'bg-sunny-yellow/20 text-sunny-yellow' 
-                    : 'bg-fresh-green/20 text-fresh-green'
-                }`}>
+                <h3 className="font-semibold text-dark-text">{product.name}</h3>
+                <span className={`px-2 py-1 rounded-full text-xs font-medium ${product.category === 'fruit'
+                  ? 'bg-[hsla(46,84%,64%,0.2)] text-sunny-yellow'
+                  : 'bg-[hsla(103,38%,57%,0.2)] text-fresh-green'
+                  }`}>
                   {product.category}
                 </span>
               </div>
-              
+
               {product.description && (
                 <p className="text-gray-600 text-sm mb-3">{product.description}</p>
               )}
-              
+
               <div className="flex justify-between items-center mb-4">
-                <span className="text-lg font-bold fresh-green">
+                <span className="text-lg font-bold text-fresh-green">
                   Rs. {product.price}
                 </span>
                 <span className="text-gray-500 text-sm">per {product.unit}</span>
@@ -133,10 +132,10 @@ export default function ItemCustomizer({ products, onAddToCart, cartItems }: Ite
                       </Button>
                     </div>
                   </div>
-                  
+
                   <Button
                     onClick={() => handleAddToCart(product)}
-                    className="w-full bg-fresh-green hover:bg-fresh-green/90 text-white"
+                    className="w-full bg-fresh-green hover:opacity-90 text-white"
                   >
                     <Plus className="mr-2 h-4 w-4" />
                     Add to Box

@@ -118,7 +118,7 @@ export default function FAQ() {
 
   const filteredFaqs = faqCategories.map(category => ({
     ...category,
-    faqs: category.faqs.filter(faq => 
+    faqs: category.faqs.filter(faq =>
       faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
       faq.answer.toLowerCase().includes(searchTerm.toLowerCase())
     )
@@ -129,7 +129,7 @@ export default function FAQ() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold dark-text mb-4">Frequently Asked Questions</h1>
+          <h1 className="text-4xl font-bold text-dark-text mb-4">Frequently Asked Questions</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Find answers to common questions about ordering, delivery, payments, and more.
           </p>
@@ -145,7 +145,7 @@ export default function FAQ() {
                 placeholder="Search frequently asked questions..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 rounded-xl border-gray-200 focus:border-fresh-green focus:ring-2 focus:ring-fresh-green/20"
+                className="pl-10 rounded-xl border-gray-200 focus:border-fresh-green focus:ring-2 focus:ring-[hsla(103,38%,57%,0.2)]"
               />
             </div>
           </CardContent>
@@ -162,7 +162,7 @@ export default function FAQ() {
                     <h2 className="text-2xl font-bold">{category.title}</h2>
                   </div>
                 </div>
-                
+
                 <div className="p-6">
                   <Accordion type="single" collapsible className="w-full">
                     {category.faqs.map((faq, faqIndex) => (
@@ -187,13 +187,13 @@ export default function FAQ() {
           <Card className="text-center">
             <CardContent className="p-12">
               <div className="text-6xl mb-4">🤔</div>
-              <h3 className="text-xl font-semibold dark-text mb-2">No results found</h3>
+              <h3 className="text-xl font-semibold text-dark-text mb-2">No results found</h3>
               <p className="text-gray-600 mb-6">
                 We couldn't find any FAQs matching your search. Try different keywords or contact our support team.
               </p>
-              <Button 
+              <Button
                 onClick={() => setSearchTerm("")}
-                className="bg-fresh-green text-white hover:bg-fresh-green/90"
+                className="bg-fresh-green text-white hover:bg-[hsla(103,38%,57%,0.9)]"
               >
                 Clear Search
               </Button>
@@ -202,13 +202,13 @@ export default function FAQ() {
         )}
 
         {/* Contact Support */}
-        <Card className="mt-12 bg-gradient-to-br from-fresh-green to-fresh-green/80 text-white">
+        <Card className="mt-12 bg-gradient-to-br from-fresh-green to-[hsla(103,38%,57%,0.8)] text-white">
           <CardContent className="p-8 text-center">
             <h3 className="text-2xl font-bold mb-4">Still have questions?</h3>
             <p className="text-white/90 mb-6">
               Our friendly customer support team is here to help you with any questions or concerns.
             </p>
-            
+
             <div className="grid md:grid-cols-3 gap-4">
               <Link href="/contact">
                 <Button className="w-full bg-white text-fresh-green hover:bg-gray-100">
@@ -216,14 +216,14 @@ export default function FAQ() {
                   Live Chat
                 </Button>
               </Link>
-              
+
               <a href="tel:+923001234567">
                 <Button className="w-full bg-white text-fresh-green hover:bg-gray-100">
                   <Phone className="mr-2 w-5 h-5" />
                   Call Support
                 </Button>
               </a>
-              
+
               <a href="mailto:support@freshbox.pk">
                 <Button className="w-full bg-white text-fresh-green hover:bg-gray-100">
                   <Mail className="mr-2 w-5 h-5" />
@@ -231,7 +231,7 @@ export default function FAQ() {
                 </Button>
               </a>
             </div>
-            
+
             <p className="text-white/80 text-sm mt-4">
               Available 9 AM - 9 PM, 7 days a week • Response within 2 hours
             </p>
@@ -242,7 +242,7 @@ export default function FAQ() {
         <div className="text-center mt-8">
           <p className="text-gray-600 mb-4">Ready to place your order?</p>
           <Link href="/products">
-            <Button size="lg" className="bg-fresh-green text-white hover:bg-fresh-green/90">
+            <Button size="lg" className="bg-fresh-green text-white hover:opacity-90">
               Start Shopping
             </Button>
           </Link>

@@ -36,8 +36,8 @@ export default function HowItWorks() {
       name: "Easypaisa",
       icon: <Smartphone className="text-white text-xl" />,
       bgColor: "bg-fresh-green",
-      borderColor: "border-fresh-green/20",
-      hoverBorder: "hover:border-fresh-green/40",
+      borderColor: "border-[hsla(103,38%,57%,0.2)]",
+      hoverBorder: "hover:border-[hsla(103,38%,57%,0.4)]",
       checkColor: "text-fresh-green",
       features: ["Instant confirmation", "No extra charges"]
     },
@@ -45,8 +45,8 @@ export default function HowItWorks() {
       name: "JazzCash",
       icon: <Wallet className="text-white text-xl" />,
       bgColor: "bg-sunny-yellow",
-      borderColor: "border-sunny-yellow/20",
-      hoverBorder: "hover:border-sunny-yellow/40",
+      borderColor: "border-[hsla(46,84%,64%,0.2)]",
+      hoverBorder: "hover:border-[hsla(46,84%,64%,0.4)]",
       checkColor: "text-sunny-yellow",
       features: ["Fast processing", "Bank-grade security"]
     }
@@ -58,7 +58,7 @@ export default function HowItWorks() {
       <section className="py-20 bg-light-green-tint">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h1 className="text-4xl font-bold dark-text mb-4">How It Works</h1>
+            <h1 className="text-4xl font-bold text-dark-text mb-4">How It Works</h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Getting fresh, organic produce delivered to your door is as easy as 1-2-3. Here's how our simple process works.
             </p>
@@ -77,8 +77,8 @@ export default function HowItWorks() {
                     {step.number}
                   </div>
                 </div>
-                
-                <h3 className="text-2xl font-bold dark-text mb-4">{step.title}</h3>
+
+                <h3 className="text-2xl font-bold text-dark-text mb-4">{step.title}</h3>
                 <p className="text-gray-600 leading-relaxed">
                   {step.description}
                 </p>
@@ -89,7 +89,7 @@ export default function HowItWorks() {
           {/* CTA */}
           <div className="text-center">
             <Link href="/products">
-              <Button size="lg" className="bg-fresh-green text-white hover:bg-fresh-green/90 text-lg px-8 py-4">
+              <Button size="lg" className="bg-fresh-green text-white hover:opacity-90 text-lg px-8 py-4">
                 Start Your Order
               </Button>
             </Link>
@@ -103,13 +103,13 @@ export default function HowItWorks() {
           <Card className="shadow-lg">
             <CardContent className="p-8">
               <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold dark-text mb-4">Secure Payment Options</h2>
+                <h2 className="text-2xl font-bold text-dark-text mb-4">Secure Payment Options</h2>
                 <p className="text-gray-600">We support Pakistan's most trusted digital payment methods for your convenience.</p>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 {paymentMethods.map((method) => (
-                  <div 
+                  <div
                     key={method.name}
                     className={`border-2 ${method.borderColor} rounded-2xl p-6 ${method.hoverBorder} transition-all`}
                   >
@@ -118,7 +118,7 @@ export default function HowItWorks() {
                         {method.icon}
                       </div>
                       <div>
-                        <h4 className="text-xl font-semibold dark-text">{method.name}</h4>
+                        <h4 className="text-xl font-semibold text-dark-text">{method.name}</h4>
                         <p className="text-gray-600">
                           {method.name === "Easypaisa" ? "Quick & secure mobile payments" : "Trusted digital wallet payments"}
                         </p>
@@ -144,7 +144,7 @@ export default function HowItWorks() {
       <section className="py-20 bg-light-green-tint">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold dark-text mb-4">Why Choose Our Process?</h2>
+            <h2 className="text-3xl font-bold text-dark-text mb-4">Why Choose Our Process?</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Our streamlined ordering system ensures you get the freshest produce with maximum convenience.
             </p>
@@ -176,7 +176,7 @@ export default function HowItWorks() {
               <Card key={index} className="text-center hover:shadow-lg transition-shadow">
                 <CardContent className="p-6">
                   <div className="text-4xl mb-4">{benefit.emoji}</div>
-                  <h3 className="text-lg font-semibold dark-text mb-2">{benefit.title}</h3>
+                  <h3 className="text-lg font-semibold text-dark-text mb-2">{benefit.title}</h3>
                   <p className="text-gray-600 text-sm">{benefit.description}</p>
                 </CardContent>
               </Card>

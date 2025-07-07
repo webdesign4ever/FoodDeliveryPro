@@ -19,7 +19,7 @@ export default function BoxSelector({ boxTypes, onSelectBox }: BoxSelectorProps)
   };
 
   const getColorClass = (index: number) => {
-    return index === 1 ? 'sunny-yellow' : 'fresh-green';
+    return index === 1 ? 'text-sunny-yellow' : 'text-fresh-green';
   };
 
   const getBgColorClass = (index: number) => {
@@ -37,14 +37,14 @@ export default function BoxSelector({ boxTypes, onSelectBox }: BoxSelectorProps)
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-3xl font-bold dark-text mb-4">Choose Your Box Size</h2>
+        <h2 className="text-3xl font-bold text-dark-text mb-4">Choose Your Box Size</h2>
         <p className="text-gray-600">Select the perfect size for your household needs</p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-6">
         {boxTypes.map((box, index) => (
-          <Card 
-            key={box.id} 
+          <Card
+            key={box.id}
             className={`relative overflow-hidden hover:shadow-xl transition-all group cursor-pointer ${getBgTintClass(index)} ${getBorderClass(index)}`}
             onClick={() => onSelectBox(box)}
           >
@@ -53,15 +53,15 @@ export default function BoxSelector({ boxTypes, onSelectBox }: BoxSelectorProps)
                 Most Popular
               </div>
             )}
-            
+
             <CardContent className="p-8">
               <div className={`w-16 h-16 ${getBgColorClass(index)} rounded-2xl flex items-center justify-center mb-6`}>
                 {getIcon(index)}
               </div>
-              
-              <h3 className="text-2xl font-bold dark-text mb-2">{box.name}</h3>
+
+              <h3 className="text-2xl font-bold text-dark-text mb-2">{box.name}</h3>
               <p className="text-gray-600 mb-6">{box.description}</p>
-              
+
               <div className="flex items-baseline mb-6">
                 <span className={`text-4xl font-bold ${getColorClass(index)}`}>
                   Rs. {box.price}
@@ -84,7 +84,7 @@ export default function BoxSelector({ boxTypes, onSelectBox }: BoxSelectorProps)
                 </li>
               </ul>
 
-              <Button 
+              <Button
                 className={`w-full ${getBgColorClass(index)} hover:opacity-90 text-white group-hover:shadow-lg transition-all`}
               >
                 Select This Box

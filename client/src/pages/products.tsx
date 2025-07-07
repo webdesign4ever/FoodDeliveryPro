@@ -31,7 +31,7 @@ export default function Products() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const boxId = urlParams.get('boxId');
-    
+
     if (boxId && boxTypes.length > 0 && !selectedBox) {
       const box = boxTypes.find(b => b.id === parseInt(boxId));
       if (box) {
@@ -72,7 +72,7 @@ export default function Products() {
       removeFromCart(productId);
       return;
     }
-    
+
     setCartItems(prev =>
       prev.map(item =>
         item.product.id === productId
@@ -86,7 +86,7 @@ export default function Products() {
     <div className="min-h-screen bg-light-green-tint py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold dark-text mb-4">Customize Your Fresh Box</h1>
+          <h1 className="text-4xl font-bold text-dark-text mb-4">Customize Your Fresh Box</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Choose your box size, then select your favorite fresh fruits and vegetables.
           </p>
@@ -94,9 +94,9 @@ export default function Products() {
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Box Selection */}
-          <div className="lg:col-span-2">
+          <div className={`${!selectedBox ? "lg:col-span-3" : "lg:col-span-2"}`}>
             {!selectedBox ? (
-              <BoxSelector 
+              <BoxSelector
                 boxTypes={boxTypes}
                 onSelectBox={setSelectedBox}
               />
@@ -105,12 +105,12 @@ export default function Products() {
                 <div className="bg-white rounded-2xl p-6 shadow-lg">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-2xl font-bold dark-text">{selectedBox.name}</h3>
+                      <h3 className="text-2xl font-bold text-dark-text">{selectedBox.name}</h3>
                       <p className="text-gray-600">{selectedBox.description}</p>
                     </div>
                     <button
                       onClick={() => setSelectedBox(null)}
-                      className="text-fresh-green hover:text-fresh-green/80 font-medium"
+                      className="text-fresh-green hover:opacity-80 font-medium"
                     >
                       Change Box
                     </button>
@@ -123,7 +123,7 @@ export default function Products() {
                     <TabsTrigger value="fruits">Fruits</TabsTrigger>
                     <TabsTrigger value="vegetables">Vegetables</TabsTrigger>
                   </TabsList>
-                  
+
                   <TabsContent value="all" className="mt-6">
                     <ItemCustomizer
                       products={products}
@@ -131,7 +131,7 @@ export default function Products() {
                       cartItems={cartItems}
                     />
                   </TabsContent>
-                  
+
                   <TabsContent value="fruits" className="mt-6">
                     <ItemCustomizer
                       products={fruits}
@@ -139,7 +139,7 @@ export default function Products() {
                       cartItems={cartItems}
                     />
                   </TabsContent>
-                  
+
                   <TabsContent value="vegetables" className="mt-6">
                     <ItemCustomizer
                       products={vegetables}
@@ -156,19 +156,19 @@ export default function Products() {
           {selectedBox && (
             <div className="lg:col-span-1">
               <div className="bg-white rounded-2xl p-6 shadow-lg sticky top-24">
-                <h3 className="text-xl font-bold dark-text mb-4">Your Box</h3>
-                
+                <h3 className="text-xl font-bold text-dark-text mb-4">Your Box</h3>
+
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between items-center">
                     <span className="font-medium">Current Box:</span>
-                    <span className="fresh-green font-semibold">{selectedBox.name}</span>
+                    <span className="text-fresh-green font-semibold">{selectedBox.name}</span>
                   </div>
-                  
+
                   <div className="flex justify-between items-center">
                     <span className="font-medium">Total Items:</span>
                     <span>{cartItems.reduce((sum, item) => sum + item.quantity, 0)}</span>
                   </div>
-                  
+
                   {cartItems.length > 0 && (
                     <div className="text-sm text-gray-600 bg-yellow-50 p-2 rounded">
                       <strong>Note:</strong> Items from all box types will be combined in your order
@@ -204,9 +204,9 @@ export default function Products() {
                 <div className="border-t pt-4">
                   <div className="flex justify-between items-center text-lg font-bold mb-4">
                     <span>Total:</span>
-                    <span className="fresh-green">Rs. {calculateTotal()}</span>
+                    <span className="text-fresh-green">Rs. {calculateTotal()}</span>
                   </div>
-                  
+
                   <button
                     disabled={cartItems.length === 0}
                     onClick={() => {
@@ -217,7 +217,7 @@ export default function Products() {
                         window.location.href = `/checkout?boxId=${boxId}`;
                       }
                     }}
-                    className="w-full bg-fresh-green text-white py-3 rounded-xl font-semibold hover:bg-fresh-green/90 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                    className="w-full bg-fresh-green text-white py-3 rounded-xl font-semibold hover:opacity-90 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
                   >
                     Proceed to Checkout
                   </button>

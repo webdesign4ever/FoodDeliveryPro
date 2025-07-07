@@ -40,19 +40,20 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-br from-[var(--light-green-tint)] to-[var(--light-yellow-tint)]">
+      <section className="relative min-h-screen bg-gradient-to-br from-light-green-tint to-light-yellow-tint">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1500595046743-cd271d694d30?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&h=1080')] bg-cover bg-center opacity-10"></div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div className="space-y-6">
-                <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
-                  <span className="fresh-green">Fresh</span>
-                  <span className="sunny-yellow"> & </span>
-                  <span className="fresh-green">Organic</span>
+                {/* <h1 className="text-5xl lg:text-6xl font-bold leading-tight"> */}
+                <h1 className="text-5xl leading-tight font-bold lg:text-6xl lg:leading-tight">
+                  <span className="text-fresh-green">Fresh</span>
+                  <span className="text-sunny-yellow"> & </span>
+                  <span className="text-fresh-green">Organic</span>
                   <br />
-                  <span className="dark-text">Delivered Daily</span>
+                  <span className="text-dark-text">Delivered Daily</span>
                 </h1>
                 <p className="text-xl text-gray-600 leading-relaxed">
                   Premium quality fruits and vegetables delivered fresh to your doorstep.
@@ -62,23 +63,23 @@ export default function Home() {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/products">
-                  <Button size="lg" className="bg-fresh-green text-white hover:bg-[var(--fresh-green)/.9] text-lg px-8 py-4">
+                  <Button size="lg" className="bg-fresh-green text-white hover:opacity-90 text-lg px-8 py-4">
                     <ShoppingCart className="mr-2 w-5 h-5" />
                     Order Your Box
                   </Button>
                 </Link>
                 <Link href="/how-it-works">
-                  <Button variant="outline" size="lg" className="border-2 border-[var(--fresh-green)] text-[var(--fresh-green)] hover:bg-fresh-green hover:text-white text-lg px-8 py-4">
+                  <Button variant="outline" size="lg" className="border-2 border-fresh-green text-fresh-green hover:bg-fresh-green hover:text-white text-lg px-8 py-4">
                     <Play className="mr-2 w-5 h-5" />
                     How It Works
                   </Button>
                 </Link>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8">
+              <div className="grid grid-cols-2 gap-6 pt-8">
                 {features.map((feature, index) => (
                   <div key={index} className="text-center">
-                    <div className="text-3xl font-bold fresh-green mb-1">{feature.description}</div>
+                    <div className="text-3xl font-bold text-fresh-green mb-1">{feature.description}</div>
                     <div className="text-gray-600 text-sm">{feature.title}</div>
                   </div>
                 ))}
@@ -98,7 +99,7 @@ export default function Home() {
                     <Truck className="text-white w-6 h-6" />
                   </div>
                   <div>
-                    <div className="font-semibold dark-text">Free Delivery</div>
+                    <div className="font-semibold text-dark-text">Free Delivery</div>
                     <div className="text-sm text-gray-600">Orders above Rs. 1000</div>
                   </div>
                 </div>
@@ -119,15 +120,15 @@ export default function Home() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold dark-text mb-4">Choose Your Perfect Box</h2>
+            <h2 className="text-4xl font-bold text-dark-text mb-4">Choose Your Perfect Box</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Select from our carefully curated boxes, customize with your favorite items.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="grid lg:grid-cols-3 gap-8 mb-12">
             {boxTypes.map((box, index) => (
-              <Card key={box.id} className={`relative overflow-hidden hover:shadow-xl transition-all group ${index === 1 ? 'border-2 border-[var(--sunny-yellow)] bg-light-yellow-tint' : 'bg-light-green-tint'
+              <Card key={box.id} className={`relative overflow-hidden hover:shadow-xl transition-all group ${index === 1 ? 'border-2 border-sunny-yellow bg-light-yellow-tint' : 'bg-light-green-tint'
                 }`}>
                 {index === 1 && (
                   <div className="absolute top-4 right-4 bg-sunny-yellow text-white px-3 py-1 rounded-full text-sm font-semibold">
@@ -142,11 +143,11 @@ export default function Home() {
                     {index === 2 && <Package className="text-white w-8 h-8" />}
                   </div>
 
-                  <h3 className="text-2xl font-bold dark-text mb-2">{box.name}</h3>
+                  <h3 className="text-2xl font-bold text-dark-text mb-2">{box.name}</h3>
                   <p className="text-gray-600 mb-6">{box.description}</p>
 
                   <div className="flex items-baseline mb-6">
-                    <span className={`text-4xl font-bold ${index === 1 ? 'text-[var(--sunny-yellow)]' : 'text-[var(--fresh-green)]'}`}>
+                    <span className={`text-4xl font-bold ${index === 1 ? 'text-sunny-yellow' : 'text-fresh-green'}`}>
                       Rs. {box.price}
                     </span>
                     <span className="text-gray-500 ml-2">/box</span>
@@ -154,23 +155,23 @@ export default function Home() {
 
                   <ul className="space-y-3 mb-8">
                     <li className="flex items-center text-gray-700">
-                      <div className={`w-2 h-2 ${index === 1 ? 'bg-[var(--sunny-yellow)]' : 'bg-[var(--fresh-green)]'} rounded-full mr-3`}></div>
+                      <div className={`w-2 h-2 ${index === 1 ? 'bg-sunny-yellow' : 'bg-fresh-green'} rounded-full mr-3`}></div>
                       <span>Fill with unlimited items</span>
                     </li>
                     <li className="flex items-center text-gray-700">
-                      <div className={`w-2 h-2 ${index === 1 ? 'bg-[var(--sunny-yellow)]' : 'bg-[var(--fresh-green)]'} rounded-full mr-3`}></div>
+                      <div className={`w-2 h-2 ${index === 1 ? 'bg-sunny-yellow' : 'bg-fresh-green'} rounded-full mr-3`}></div>
                       <span>Free delivery included</span>
                     </li>
                     <li className="flex items-center text-gray-700">
-                      <div className={`w-2 h-2 ${index === 1 ? 'bg-[var(--sunny-yellow)]' : 'bg-[var(--fresh-green)]'} rounded-full mr-3`}></div>
+                      <div className={`w-2 h-2 ${index === 1 ? 'bg-sunny-yellow' : 'bg-fresh-green'} rounded-full mr-3`}></div>
                       <span>100% organic guarantee</span>
                     </li>
                   </ul>
 
                   <Link href={`/products?boxId=${box.id}`}>
                     <Button className={`w-full ${index === 1
-                      ? 'bg-[var(--sunny-yellow)] hover:bg-[var(--sunny-yellow)/.9]'
-                      : 'bg-[var(--fresh-green)] hover:bg-[var(--fresh-green)/.9]'
+                      ? 'bg-sunny-yellow hover:opacity-90'
+                      : 'bg-fresh-green hover:opacity-90'
                       } text-white`}>
                       Customize Box
                     </Button>
@@ -182,7 +183,7 @@ export default function Home() {
 
           <div className="text-center">
             <Link href="/products">
-              <Button size="lg" className="bg-[var(--fresh-green)] text-white hover:bg-[var(--fresh-green)/.9]"
+              <Button size="lg" className="bg-fresh-green text-white hover:opacity-90"
               // hover:bg-fresh-green/90  
               >
                 View All Products
@@ -193,14 +194,10 @@ export default function Home() {
       </section>
 
       {/* Product Categories */}
-      <section className="py-20 bg-[var(--light-green-tint)]"
-      //bg-light-green-tint
-      >
+      <section className="py-20 bg-light-green-tint">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-gradient-to-br from-[var(--fresh-green)] to-[var(--fresh-green)/.8] rounded-3xl p-8 text-white relative overflow-hidden"
-            //from-fresh-green to-fresh-green/80
-            >
+            <div className="bg-gradient-to-br from-fresh-green to-[hsla(103,38%,57%,0.8)] rounded-3xl p-8 text-white relative overflow-hidden">
               <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1540420773420-3366772f4999?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600')] bg-cover bg-center"
               // opacity-20
               ></div>
@@ -214,16 +211,14 @@ export default function Home() {
                 <p className="text-white/90 mb-6">Farm-fresh vegetables picked at peak ripeness and delivered within 24 hours of harvest.</p>
 
                 <Link href="/products?category=vegetable">
-                  <Button className="bg-white text-[var(--fresh-green)] hover:shadow-lg"
-                  //
-                  >
+                  <Button className="bg-white text-fresh-green hover:shadow-lg">
                     Explore Vegetables
                   </Button>
                 </Link>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-[var(--sunny-yellow)] to-[var(--sunny-yellow)/.8] rounded-3xl p-8 text-white relative overflow-hidden">
+            <div className="bg-gradient-to-br from-sunny-yellow to-[hsla(46,84%,64%,0.8)] rounded-3xl p-8 text-white relative overflow-hidden">
               <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1619566636858-adf3ef46400b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600')] bg-cover bg-center"
               // opacity-20
               ></div>
@@ -237,7 +232,7 @@ export default function Home() {
                 <p className="text-white/90 mb-6">Hand-selected seasonal fruits bursting with natural sweetness and essential nutrients.</p>
 
                 <Link href="/products?category=fruit">
-                  <Button className="bg-white text-[var(--sunny-yellow)] hover:shadow-lg">
+                  <Button className="bg-white text-sunny-yellow hover:shadow-lg">
                     Explore Fruits
                   </Button>
                 </Link>

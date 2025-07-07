@@ -63,12 +63,12 @@ export default function About() {
       <section className="py-20 bg-gradient-to-br from-light-green-tint to-light-yellow-tint">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold dark-text mb-6">
-              About <span className="fresh-green">FreshBox</span>
+            <h1 className="text-4xl md:text-5xl font-bold text-dark-text mb-6">
+              About <span className="text-fresh-green">FreshBox</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              We're on a mission to make fresh, organic produce accessible to every Pakistani family. 
-              Started in 2023, FreshBox connects you directly with local organic farmers, ensuring 
+              We're on a mission to make fresh, organic produce accessible to every Pakistani family.
+              Started in 2023, FreshBox connects you directly with local organic farmers, ensuring
               the highest quality fruits and vegetables reach your table.
             </p>
           </div>
@@ -77,7 +77,7 @@ export default function About() {
             {stats.map((stat, index) => (
               <Card key={index} className="text-center hover:shadow-lg transition-shadow">
                 <CardContent className="p-6">
-                  <div className="text-3xl font-bold fresh-green mb-2">{stat.number}</div>
+                  <div className="text-3xl font-bold text-fresh-green mb-2">{stat.number}</div>
                   <div className="text-gray-600">{stat.label}</div>
                 </CardContent>
               </Card>
@@ -91,21 +91,21 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold dark-text mb-6">Our Mission</h2>
+              <h2 className="text-3xl font-bold text-dark-text mb-6">Our Mission</h2>
               <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                To revolutionize how Pakistani families access fresh, organic produce by creating 
-                a transparent, sustainable, and convenient supply chain that benefits both consumers 
+                To revolutionize how Pakistani families access fresh, organic produce by creating
+                a transparent, sustainable, and convenient supply chain that benefits both consumers
                 and local farmers.
               </p>
               <p className="text-gray-600 text-lg leading-relaxed">
-                We believe everyone deserves access to nutritious, chemical-free food that supports 
+                We believe everyone deserves access to nutritious, chemical-free food that supports
                 both personal health and environmental sustainability.
               </p>
             </div>
             <div className="relative">
-              <img 
-                src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
-                alt="Organic farming" 
+              <img
+                src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600"
+                alt="Organic farming"
                 className="rounded-2xl shadow-xl w-full"
               />
               <div className="absolute -bottom-6 -right-6 bg-fresh-green p-4 rounded-2xl text-white">
@@ -124,7 +124,7 @@ export default function About() {
       <section className="py-20 bg-light-green-tint">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold dark-text mb-4">Our Values</h2>
+            <h2 className="text-3xl font-bold text-dark-text mb-4">Our Values</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               These core values guide everything we do, from sourcing to delivery.
             </p>
@@ -137,7 +137,7 @@ export default function About() {
                   <div className={`w-16 h-16 ${value.bgColor} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
                     {value.icon}
                   </div>
-                  <h3 className="text-xl font-bold dark-text mb-3">{value.title}</h3>
+                  <h3 className="text-xl font-bold text-dark-text mb-3">{value.title}</h3>
                   <p className="text-gray-600 text-sm leading-relaxed">{value.description}</p>
                 </CardContent>
               </Card>
@@ -150,7 +150,7 @@ export default function About() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold dark-text mb-4">Meet Our Team</h2>
+            <h2 className="text-3xl font-bold text-dark-text mb-4">Meet Our Team</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               The passionate people behind FreshBox, working to bring you the best organic produce.
             </p>
@@ -161,8 +161,8 @@ export default function About() {
               <Card key={index} className="text-center hover:shadow-lg transition-shadow">
                 <CardContent className="p-8">
                   <div className="text-6xl mb-4">{member.emoji}</div>
-                  <h3 className="text-xl font-bold dark-text mb-2">{member.name}</h3>
-                  <p className="fresh-green font-semibold mb-3">{member.role}</p>
+                  <h3 className="text-xl font-bold text-dark-text mb-2">{member.name}</h3>
+                  <p className="text-fresh-green font-semibold mb-3">{member.role}</p>
                   <p className="text-gray-600 text-sm leading-relaxed">{member.description}</p>
                 </CardContent>
               </Card>
@@ -175,7 +175,7 @@ export default function About() {
       <section className="py-20 bg-light-green-tint">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold dark-text mb-4">Service Areas</h2>
+            <h2 className="text-3xl font-bold text-dark-text mb-4">Service Areas</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Currently serving major cities across Pakistan, with plans to expand nationwide.
             </p>
@@ -195,12 +195,11 @@ export default function About() {
               <Card key={index} className="text-center">
                 <CardContent className="p-6">
                   <div className="text-3xl mb-3">{area.emoji}</div>
-                  <h3 className="font-bold dark-text mb-2">{area.city}</h3>
-                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                    area.status === "Active" 
-                      ? "bg-fresh-green/20 text-fresh-green" 
-                      : "bg-sunny-yellow/20 text-sunny-yellow"
-                  }`}>
+                  <h3 className="font-bold text-dark-text mb-2">{area.city}</h3>
+                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${area.status === "Active"
+                    ? "bg-[hsla(103,38%,57%,0.2)] text-fresh-green"
+                    : "bg-[hsla(46,84%,64%,0.2)] text-sunny-yellow"
+                    }`}>
                     {area.status}
                   </span>
                 </CardContent>
@@ -215,9 +214,9 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="relative">
-              <img 
-                src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
-                alt="Sustainable farming" 
+              <img
+                src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600"
+                alt="Sustainable farming"
                 className="rounded-2xl shadow-xl w-full"
               />
               <div className="absolute -top-6 -left-6 bg-sunny-yellow p-4 rounded-2xl text-white">
@@ -229,7 +228,7 @@ export default function About() {
               </div>
             </div>
             <div>
-              <h2 className="text-3xl font-bold dark-text mb-6">Sustainability & Impact</h2>
+              <h2 className="text-3xl font-bold text-dark-text mb-6">Sustainability & Impact</h2>
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-fresh-green rounded-full mt-2"></div>

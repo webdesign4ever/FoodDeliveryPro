@@ -100,7 +100,7 @@ export default function Contact() {
     <div className="min-h-screen py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold dark-text mb-4">Get In Touch</h1>
+          <h1 className="text-4xl font-bold text-dark-text mb-4">Get In Touch</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Have questions about our products or need support with your order? We're here to help you 24/7.
           </p>
@@ -110,7 +110,7 @@ export default function Contact() {
           {/* Contact Information */}
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-bold dark-text mb-6">Contact Information</h2>
+              <h2 className="text-2xl font-bold text-dark-text mb-6">Contact Information</h2>
               <div className="space-y-6">
                 {contactInfo.map((info, index) => (
                   <div key={index} className="flex items-start space-x-4">
@@ -118,7 +118,7 @@ export default function Contact() {
                       {info.icon}
                     </div>
                     <div>
-                      <h4 className="font-semibold dark-text mb-1">{info.title}</h4>
+                      <h4 className="font-semibold text-dark-text mb-1">{info.title}</h4>
                       <p className="text-gray-600">{info.value}</p>
                       <p className="text-sm text-gray-500">{info.subtitle}</p>
                     </div>
@@ -128,7 +128,7 @@ export default function Contact() {
             </div>
 
             {/* Live Chat Widget */}
-            <Card className="bg-gradient-to-br from-fresh-green to-fresh-green/80 text-white">
+            <Card className="bg-gradient-to-br from-fresh-green to-[hsla(103,38%,57%,0.8)] text-white">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h4 className="text-xl font-semibold">Live Chat Support</h4>
@@ -156,8 +156,8 @@ export default function Contact() {
           {/* Contact Form */}
           <Card className="bg-light-green-tint">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-bold dark-text mb-6">Send us a Message</h3>
-              
+              <h3 className="text-2xl font-bold text-dark-text mb-6">Send us a Message</h3>
+
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
@@ -166,12 +166,12 @@ export default function Contact() {
                       name="firstName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-sm font-medium dark-text">First Name</FormLabel>
+                          <FormLabel className="text-sm font-medium text-dark-text">First Name</FormLabel>
                           <FormControl>
-                            <Input 
-                              placeholder="Your first name" 
-                              className="rounded-xl border-gray-200 focus:border-fresh-green focus:ring-2 focus:ring-fresh-green/20" 
-                              {...field} 
+                            <Input
+                              placeholder="Your first name"
+                              className="rounded-xl border-gray-200 focus:border-fresh-green focus:ring-2 focus:ring-[hsla(103,38%,57%,0.2)]"
+                              {...field}
                             />
                           </FormControl>
                           <FormMessage />
@@ -183,12 +183,12 @@ export default function Contact() {
                       name="lastName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-sm font-medium dark-text">Last Name</FormLabel>
+                          <FormLabel className="text-sm font-medium text-dark-text">Last Name</FormLabel>
                           <FormControl>
-                            <Input 
-                              placeholder="Your last name" 
-                              className="rounded-xl border-gray-200 focus:border-fresh-green focus:ring-2 focus:ring-fresh-green/20" 
-                              {...field} 
+                            <Input
+                              placeholder="Your last name"
+                              className="rounded-xl border-gray-200 focus:border-fresh-green focus:ring-2 focus:ring-[hsla(103,38%,57%,0.2)]"
+                              {...field}
                             />
                           </FormControl>
                           <FormMessage />
@@ -202,13 +202,13 @@ export default function Contact() {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-sm font-medium dark-text">Email Address</FormLabel>
+                        <FormLabel className="text-sm font-medium text-dark-text">Email Address</FormLabel>
                         <FormControl>
-                          <Input 
-                            type="email" 
-                            placeholder="your.email@example.com" 
-                            className="rounded-xl border-gray-200 focus:border-fresh-green focus:ring-2 focus:ring-fresh-green/20" 
-                            {...field} 
+                          <Input
+                            type="email"
+                            placeholder="your.email@example.com"
+                            className="rounded-xl border-gray-200 focus:border-fresh-green focus:ring-2 focus:ring-[hsla(103,38%,57%,0.2)]"
+                            {...field}
                           />
                         </FormControl>
                         <FormMessage />
@@ -221,13 +221,13 @@ export default function Contact() {
                     name="phone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-sm font-medium dark-text">Phone Number</FormLabel>
+                        <FormLabel className="text-sm font-medium text-dark-text">Phone Number</FormLabel>
                         <FormControl>
-                          <Input 
-                            type="tel" 
-                            placeholder="+92 300 1234567" 
-                            className="rounded-xl border-gray-200 focus:border-fresh-green focus:ring-2 focus:ring-fresh-green/20" 
-                            {...field} 
+                          <Input
+                            type="tel"
+                            placeholder="+92 300 1234567"
+                            className="rounded-xl border-gray-200 focus:border-fresh-green focus:ring-2 focus:ring-[hsla(103,38%,57%,0.2)]"
+                            {...field}
                           />
                         </FormControl>
                         <FormMessage />
@@ -240,10 +240,10 @@ export default function Contact() {
                     name="subject"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-sm font-medium dark-text">Subject</FormLabel>
+                        <FormLabel className="text-sm font-medium text-dark-text">Subject</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
-                            <SelectTrigger className="rounded-xl border-gray-200 focus:border-fresh-green focus:ring-2 focus:ring-fresh-green/20">
+                            <SelectTrigger className="rounded-xl border-gray-200 focus:border-fresh-green focus:ring-2 focus:ring-[hsla(103,38%,57%,0.2)]">
                               <SelectValue placeholder="Select a subject" />
                             </SelectTrigger>
                           </FormControl>
@@ -265,13 +265,13 @@ export default function Contact() {
                     name="message"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-sm font-medium dark-text">Message</FormLabel>
+                        <FormLabel className="text-sm font-medium text-dark-text">Message</FormLabel>
                         <FormControl>
-                          <Textarea 
-                            rows={4} 
-                            placeholder="Tell us how we can help you..." 
-                            className="rounded-xl border-gray-200 focus:border-fresh-green focus:ring-2 focus:ring-fresh-green/20 resize-none" 
-                            {...field} 
+                          <Textarea
+                            rows={4}
+                            placeholder="Tell us how we can help you..."
+                            className="rounded-xl border-gray-200 focus:border-fresh-green focus:ring-2 focus:ring-[hsla(103,38%,57%,0.2)] resize-none"
+                            {...field}
                           />
                         </FormControl>
                         <FormMessage />
@@ -279,10 +279,10 @@ export default function Contact() {
                     )}
                   />
 
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     disabled={contactMutation.isPending}
-                    className="w-full bg-fresh-green text-white hover:bg-fresh-green/90 rounded-xl py-4 font-semibold transition-all"
+                    className="w-full bg-fresh-green text-white hover:bg-[hsla(103,38%,57%,0.9)] rounded-xl py-4 font-semibold transition-all"
                   >
                     <Send className="mr-2 w-5 h-5" />
                     {contactMutation.isPending ? "Sending..." : "Send Message"}
